@@ -1,5 +1,7 @@
 # Verification report
 
+บันทึกผลตามลำดับเวลา ข้อความรอทดสอบในช่วงต้นไม่แทนสถานะช่วงหลัง การปรับคู่มือรอบ self-study ดู [documentation review](documentation-review.md); ไม่ถือว่าการตรวจเอกสารเป็น live LINE/GA4 verification
+
 Environment inspected 2026-10-09: macOS arm64, Node 22.22.3, npm 12.1.0, Docker client 29.8.2/server 29.8.1 (Desktop 4.93.0). Docker server ตอบได้ ไม่ได้แปลว่า commerce lab ผ่านแล้ว
 
 Account-dependent checks (GitHub PR, LINE OA, Login, ngrok, GA4) ยังไม่ได้ทำ ไม่มีการเปิดบัญชี/Provider/tunnel ในนามผู้ใช้ Windows/Linux setup ยังไม่ได้ทดลองจริง

@@ -12,19 +12,19 @@ Terminal คือหน้าต่างรับคำสั่ง; shell เ
 
 ## ติดตั้ง
 
-ใช้ official installers และเลือก stable/LTS ไม่ใช้สคริปต์ที่ไม่ทราบแหล่งที่มา:
+ใช้ official installers และเวอร์ชันที่ตรง `labs/qe-code/package.json` ไม่ใช้สคริปต์ที่ไม่ทราบแหล่งที่มา:
 
 | OS | Terminal / Git | Runtime | Containers |
 |---|---|---|---|
 | macOS | Terminal; Git จาก official installer หรือเครื่องมือที่ IT อนุมัติ | Node.js 22.22.3 หรือ 22.x ใหม่กว่าที่ทีมอนุมัติ | Docker Desktop หาก license อนุญาต; fallback Linux VM + Docker Engine |
-| Windows | PowerShell สำหรับตรวจ version; Git Bash หรือ WSL2 Bash สำหรับ lab commands | Node.js 22.x ผ่าน official installer; ถ้าใช้ WSL ให้ติดตั้งใน WSL ด้วย | Docker Desktop ตามสิทธิ์ หรือ Linux VM ที่ทีมอนุมัติ |
-| Linux | bash และ Git ตาม official/package-manager instructions ของ distro | Node.js 22.x | Docker Engine + Compose plugin |
+| Windows | PowerShell สำหรับตรวจ version; Git Bash หรือ WSL2 Bash สำหรับ lab commands | Node.js >=22.22.3 <23 ผ่าน official installer; ถ้าใช้ WSL ให้ติดตั้งใน WSL ด้วย | Docker Desktop ตามสิทธิ์ หรือ Linux VM ที่ทีมอนุมัติ |
+| Linux | bash และ Git ตาม official/package-manager instructions ของ distro | Node.js >=22.22.3 <23 | Docker Engine + Compose plugin |
 
 Windows lab ที่มี `printf`, `cat` หรือ shell script ให้ใช้ Git Bash/WSL ไม่ copy ไป PowerShell ตรง ๆ path ที่ clone ใน WSL ต้องอยู่ใน filesystem ที่ผู้เรียนเข้าใจ หากองค์กรห้าม local installation ใช้ Linux VM ที่ mentor เตรียม ไม่อ้างว่า browser-only เรียนทุก lab ได้
 
 ติดตั้ง editor ที่ทีมใช้ เช่น VS Code; เปิด folder หลักสูตรเป็น workspace อย่าสร้างไฟล์ไว้ใน terminal home โดยไม่รู้ตัว
 
-## ตรวจเครื่อง
+## Lab A: ตรวจเครื่อง
 
 รันจาก folder หลักสูตร; PowerShell ใช้ `Get-Location` แทน `pwd` ได้:
 
@@ -37,7 +37,7 @@ docker version
 docker compose version
 ```
 
-Expected: Git มี version, Node ขึ้น `v22...`, npm มี version; Docker แสดงทั้ง Client และ Server ส่วน Docker CLI อย่างเดียวไม่ยืนยันว่า engine พร้อมใช้งาน ไม่ต้องติดตั้ง Docker เพื่อทำบท 1–3
+Expected: Git มี version, Node อยู่ในช่วง `>=22.22.3 <23`, npm มี version; Docker แสดงทั้ง Client และ Server ส่วน Docker CLI อย่างเดียวไม่ยืนยันว่า engine พร้อมใช้งาน ไม่ต้องติดตั้ง Docker เพื่อทำบท 1–3
 
 ## บัญชีและต้นทุน
 
@@ -56,9 +56,34 @@ Docker Desktop ไม่ฟรีสำหรับทุกองค์กร �
 
 บทนี้ไม่มี container หรือข้อมูลให้ลบ ถ้าเปลี่ยน terminal ให้กลับเข้า folder หลักสูตรแล้วใช้ `pwd` ตรวจ ไม่รัน `rm -rf`, `git clean -fdx` หรือ factory reset เพื่อแก้เครื่อง
 
-## Exercise / เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 ส่ง version checklist ตาม template โดยไม่แนบ hostname/user path ที่ละเอียดเกินจำเป็น อธิบายความต่าง CLI/runtime/server และบอกว่าบัญชีใดจำเป็นตอนนี้ หาก Docker ยังไม่พร้อมให้บันทึก limitation ไม่ทำเครื่องหมายผ่าน Docker
+
+## Lab: ตรวจ environment โดยไม่เปลี่ยนเครื่องแบบสุ่ม
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| เปิด terminal ใหม่แล้วรันชุดตรวจเครื่องด้านบน | เห็น Node `>=22.22.3 <23`; Docker ต้องมี Server เมื่อจะทำบท 04 |
+| ลอง `node -e 'process.exit(1)'` แล้ว `echo $?` ใน Bash | เห็น `1` ต่างจากคำสั่งสำเร็จที่ได้ `0`; ไม่ใช่ปัญหาติดตั้ง |
+| เปิด repository ใน editor และหา `labs/qe-code/package.json` | ระบุ working directory ที่ต้องใช้กับ npm ได้ |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] บันทึก OS/shell/versions และข้อจำกัด โดยไม่เผย path ส่วนตัว
+- [ ] ตรวจ Node ตาม `engines` และ lockfile ไม่เลือก LTS คนละ major แทนเอง
+- [ ] แยกเครื่องมือที่พร้อมกับ Docker/account ที่ยังรอได้
+- [ ] ลองอ่าน exit code และกลับเข้า root ของ repo ได้
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายได้ว่ามี Docker CLI แต่ไม่มี Server จะทำ lab ใดไม่ได้
+- [ ] ชี้ได้ว่า `npm ci` ต้องรันที่ใดและใช้ไฟล์ใด
+- [ ] บอกได้ว่า secret กับข้อมูล environment ที่แชร์ได้ต่างกันอย่างไร
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
@@ -68,3 +93,7 @@ Docker Desktop ไม่ฟรีสำหรับทุกองค์กร �
 - [Node.js download](https://nodejs.org/en/download)
 - [Docker Engine installation](https://docs.docker.com/engine/install/)
 - [Claude Skills](https://code.claude.com/docs/en/skills)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

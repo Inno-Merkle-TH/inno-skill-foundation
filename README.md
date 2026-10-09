@@ -6,11 +6,13 @@
 
 ## เริ่มต้น
 
-1. อ่าน [เตรียมเครื่อง](docs/handbook/00-setup.md)
+1. อ่าน [วิธีทำ lab และตรวจตัวเอง](docs/handbook/learning-guide.md) แล้ว [เตรียมเครื่อง](docs/handbook/00-setup.md)
 2. ทำ [HTTP และ Git/GitHub](docs/handbook/01-http-git.md)
 3. ทำ [TypeScript](docs/handbook/02-typescript.md)
 4. ทำ [Git flow](docs/handbook/03-git-flow.md)
-5. ส่งหลักฐานตาม [แบบฟอร์ม](templates/learning-evidence.md) ให้ mentor ตรวจ
+5. ตรวจ checklist ท้ายบทและเก็บ [learning evidence](templates/learning-evidence.md); ขอ mentor ช่วยเฉพาะข้อที่ติดหรือจุดที่ต้อง owner review
+
+ทุกบทมี **lab → expected result → failure case → checklist ลงมือทำ → checklist ความเข้าใจ → cleanup** เรียนตามลำดับและปรับเวลาได้ ไม่ต้องคิดคะแนน ติ๊กเฉพาะที่มีหลักฐานหรืออธิบายด้วยตัวเองได้ งาน optional แยก offline/design ออกจาก live verification
 
 ## Learning map — คลิกเข้าบทเรียนได้เลย
 
@@ -44,7 +46,7 @@
 
 ## Quick start — ใช้หลังอ่าน prerequisites
 
-คำสั่งด้านล่างใช้ **Bash/WSL/Git Bash** และเริ่มจาก root ของ repo ทุก block ใช้ terminal ที่อยู่ root ใหม่ ต้องมี Node.js 22.x ตาม [setup](docs/handbook/00-setup.md); coding tests ไม่ต้องเปิด Docker
+คำสั่งด้านล่างใช้ **Bash/WSL/Git Bash** และเริ่มจาก root ของ repo ทุก block ใช้ terminal ที่อยู่ root ใหม่ ต้องมี Node.js >=22.22.3 <23 ตาม [setup](docs/handbook/00-setup.md); coding tests ไม่ต้องเปิด Docker
 
 **1. Coding/API tests**
 
@@ -91,9 +93,9 @@ E2E สร้าง synthetic orders จริงใน lab volume อย่า�
 ### 1. เรียนให้พิสูจน์ได้ ไม่ใช่แค่ทำตามได้
 
 - ทุกบทส่ง **expected → observed → evidence → risk → next action** ผ่าน [learning evidence](templates/learning-evidence.md)
-- ทำ happy path และ negative/failure case อย่างน้อยหนึ่งกรณี ก่อนให้ mentor อนุมัติ checkpoint
+- ทำ happy path และ negative/failure case อย่างน้อยหนึ่งกรณี แล้วตรวจ checklist พร้อมหลักฐาน
 - บอกให้ชัดว่าอะไรตรวจจริง อะไร mock อะไรยังไม่ตรวจ อย่าแทน mobile LINE test ด้วย desktop screenshot
-- ใช้ reference implementation เป็นตัวอย่าง แล้วทำโจทย์ใน sandbox ของตน ให้ mentor ถามหรือเปลี่ยน fixture เพื่อพิสูจน์ความเข้าใจ
+- ใช้ reference implementation เป็นตัวอย่าง แล้วทำโจทย์ใน sandbox ของตน ลองเปลี่ยน fixture และทำนายผลเพื่อพิสูจน์ความเข้าใจ; ให้ mentor ช่วย review เมื่อจำเป็น
 
 ### 2. Git/PR: ทำงานเล็กและ review ได้
 
@@ -154,11 +156,11 @@ E2E สร้าง synthetic orders จริงใน lab volume อย่า�
 - [Coding exercises](labs/qe-code/exercises/README.md)
 - [LINE OA setup checklist](labs/line/oa-checklist.md) · [Identity map](labs/line/identity-map.md) · [Journey test cases](labs/line/journey-test-cases.md)
 
-**สำหรับ mentor** — แยกจากโจทย์ผู้เรียน ไม่แจกเฉลยก่อนลองเอง
+**เอกสารตรวจทาน/เฉลย** — ลองเองก่อนเปิดเฉลย แล้วทดสอบซ้ำด้วย fixture ใหม่
 
 - [Safety checklist](docs/mentor/safety-checklist.md) · [Acceptance checklist](docs/mentor/acceptance.md)
 - [Code answer guide](docs/mentor/code-answer-guide.md) · [SQL answer guide](docs/mentor/sql-answers.sql) · [Capstone guide](docs/mentor/capstone-guide.md)
-- [Verification report](docs/mentor/verification-report.md) · [Reference review](docs/mentor/reference-review.md) · [Progress/decisions](docs/mentor/progress.md)
+- [Documentation review](docs/mentor/documentation-review.md) · [Verification report](docs/mentor/verification-report.md) · [Reference review](docs/mentor/reference-review.md) · [Progress/decisions](docs/mentor/progress.md)
 
 ## Guardrails
 

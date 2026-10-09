@@ -62,12 +62,41 @@ Expected: PR มีไฟล์เดียว ไม่มี token/cookie แ�
 
 Ctrl+C ใน terminal server เพื่อหยุด ตรวจ URL เข้าไม่ได้แล้ว Sandbox เก็บไว้เป็นหลักฐาน ไม่ลบ shared branch ไม่ใช้ force push
 
-## Exercise / เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 อธิบายว่าทำไม `/missing` ยัง 200 และเสนอ assertion ที่จับได้ แยก request query กับ response JSON ส่ง PR ที่ได้รับ review พร้อม redacted Network screenshot และอธิบาย working tree/staging/commit/remote ได้
+
+## Lab C: ตรวจหลักฐานก่อนส่ง PR
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| เทียบ `curl -i` กับ Network สำหรับ URL เดียวกัน | method/query/status/body ตรงกัน ไม่ใช้ screenshot แทน assertion |
+| เรียก `/missing` แล้วเขียน expected ของระบบจริง | demo ยัง 200; อธิบายได้ว่าต้องตรวจ route/business response เพิ่ม |
+| แก้ข้อความหลัง `git add` แล้วดู `git diff` กับ `git diff --cached` | แยก unstaged/staged ได้; stage เฉพาะฉบับที่ต้องการก่อน commit |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] บันทึก request/response โดยไม่มี cookie/token
+- [ ] ได้ PR ที่ชี้ commit และมี purpose/test/risk/rollback
+- [ ] ตรวจ staged diff และแก้ review comment หรือบันทึกว่ายังรอ review
+- [ ] หยุด HTTP server ด้วย Ctrl+C และตรวจว่า URL ใช้ไม่ได้แล้ว
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายกรณี HTTP 200 แต่ requirement ไม่ผ่านได้
+- [ ] บอกความต่าง commit, push, PR และ deploy ได้
+- [ ] ชี้ได้ว่าไฟล์ใหม่ที่ untracked ดูด้วย `git status` ก่อน ไม่ใช่ `git diff` อย่างเดียว
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
 - [HTTP overview — MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview)
 - [Git basics](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)
 - [GitHub pull requests](https://docs.github.com/en/pull-requests)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

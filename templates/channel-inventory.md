@@ -12,3 +12,9 @@
 - Rotation/retention owner:
 - Identity linking method / evidence ของ ownership:
 - LINE UID จริงไม่ใส่ในเอกสารที่แชร์; ใช้ synthetic aliases:
+
+## Checklist ก่อนเก็บหลักฐาน
+
+- [ ] แยก intended config จาก IDs ที่มีอยู่จริง ไม่กรอกค่าคาดเดา
+- [ ] Provider binding มี owner ยืนยันก่อนเปิด API
+- [ ] เก็บเพียงชื่อ secret store ไม่ใส่ secret/token/real UID

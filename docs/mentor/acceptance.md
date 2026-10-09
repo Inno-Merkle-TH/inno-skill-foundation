@@ -1,6 +1,12 @@
 # Acceptance checklist
 
-ไม่ติ๊กข้อที่ยังไม่ได้ทดลองจริง แต่ละข้อแนบ command/result หรือ evidence path
+ใช้ตรวจการส่งมอบหลักสูตร ไม่ใช่คะแนนผู้เรียน ไม่ติ๊กข้อที่ยังไม่ได้ทดลองจริง แต่ละข้อแนบ command/result หรือ evidence path; ผลทดสอบต่าง OS/account แยกกัน
+
+- [ ] ทุกบทมี prerequisite, lab, expected/negative cases และ cleanup
+- [ ] ทุกบทมี checklist การลงมือทำและความเข้าใจที่ตรวจได้เฉพาะเรื่อง
+- [ ] Optional extensions แยก offline/design/implemented/live ชัดเจน
+- [ ] ลิงก์ภายในและคำสั่งอ้างอิงไฟล์ที่มีจริงหรือระบุว่าให้สร้าง
+- [ ] README และ templates สนับสนุนการตรวจตัวเองโดยไม่บังคับรอ mentor ทุกขั้น
 
 - [ ] Setup instructions ใช้ได้บน macOS
 - [ ] Setup instructions ใช้ได้บน Windows/WSL

@@ -32,13 +32,44 @@ bash scripts/backup.sh
 
 Backup interrupt: trap เปิด services กลับ ให้ดู exit status ไม่ใช้ไฟล์ครึ่งหนึ่ง Restore existing DB: script ปฏิเสธ อย่าลบ volume โดยอัตโนมัติ ใช้ sandbox ใหม่เช่น `RESTORE_PROJECT_NAME=qe-foundation-restore-round2 bash tests/restore.sh <path>` prefix จำกัดไม่ให้ชี้ primary project Secrets/backups อยู่ .gitignore แต่ยังต้องตรวจ staged files
 
-หยุด restore ด้วย `docker compose -p qe-foundation-restore -f compose.restore.yaml down` เก็บ volumes; core cleanup down โดยไม่ -v ถ้า image/config HA cached ให้ rebuild core proxy
+หยุด restore จาก `labs/commerce` ด้วย project name ที่ใช้จริง: รอบ default ใช้ `docker compose -p qe-foundation-restore -f compose.restore.yaml down`; หากใช้ตัวอย่าง round2 ให้ใช้ `docker compose -p qe-foundation-restore-round2 -f compose.restore.yaml down` ด้วย เก็บ volumes ไม่ใส่ `-v` ตรวจ `docker compose ls` ว่าไม่มี restore project ที่ลืมหยุด; core cleanup ใช้ `docker compose --profile tracking down` ถ้า image/config HA cached ให้ rebuild core proxyก่อนใช้งานครั้งต่อไป
 
-## Exercise / เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 ส่ง recovery report พร้อม timeline, error rate, orders/events ก่อน/หลัง, RTO/RPO ที่ตั้งและวัด, uploaded asset verification ระบุ SPOFs: DB, proxy, full shared WP volume, host, tunnel; single-machine simulation ไม่ใช่ production HA
+
+## Lab: ตรวจขอบเขต recovery ที่พิสูจน์ได้
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| เก็บ baseline และตั้ง RTO/RPO ก่อน failover | มี timestamp UTC, orders/events และ asset ที่จะเทียบ |
+| หยุด app A ด้วย failover script | GET/asset ยังได้; ไม่สรุป POST exactly-once |
+| หยุด DB แล้วเปิดกลับด้วย `docker compose start db` | app B ไม่แก้ DB outage; ตรวจ readiness ก่อนทำงานต่อ |
+| ทำ backup และ restore ใน project แยก | manifest/SQL/options/order count-value/asset ผ่าน; primary ไม่ถูกเขียนทับ |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] ปิด tunnel และหยุด browser/E2E ก่อน drill
+- [ ] วัดเวลาจริงจาก outage จนตรวจบริการได้ ไม่ใช้เวลาสั่ง start แทน
+- [ ] หยุด app B และ rebuild core proxy ก่อน backup
+- [ ] เก็บ snapshot identity/results โดยไม่แชร์ไฟล์ backup ที่มี secrets
+- [ ] หยุด restore project ที่ใช้จริงโดยไม่ลบ volumes และคืน core mode
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบาย SPOFs ที่ยังเหลือแม้ app A/B ทำงาน
+- [ ] บอกได้ว่า eventdb ไม่อยู่ใน core snapshot และกระทบ reconciliation อย่างไร
+- [ ] แยกเป้าหมาย RTO/RPO ออกจากผลที่วัดและสิ่งที่ยังไม่ตรวจ
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
 - [Docker volumes](https://docs.docker.com/engine/storage/volumes/)
 - [MariaDB backup basics](https://mariadb.com/docs/server/server-management/backup-and-restore)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

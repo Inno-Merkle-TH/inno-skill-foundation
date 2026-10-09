@@ -85,16 +85,45 @@ git log -2 --oneline
 
 Expected: commit ใหม่ย้อนการเพิ่มไฟล์ อย่าใช้ reset/force push แทน revert บน shared history การ revert merge commit ต้องเข้าใจ mainline ก่อน บทนี้ย้อน ordinary commit เท่านั้น
 
-## Troubleshooting / reset
+## Troubleshooting / cleanup
 
 ชื่อ branch ซ้ำ: ใช้ sandbox ใหม่หรือ suffix ใหม่ ไม่ delete branch คนอื่น Uncommitted changes: ตรวจ diff และ commit งานที่ต้องเก็บก่อน switch Conflict: อย่า stage markers ถ้าจะหยุดใช้ merge --abort ไม่ต้องลบ repo
 
-## Exercise / เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 ส่ง graph และ release checklist: contract diff, tests, risks, owner, rollback สาธิต PR hotfix จริงเมื่อมี GitHub sandbox พร้อม อธิบายว่าทำไมต้อง sync develop และ revert ไม่รับประกัน tracking data ที่หายไปแล้วจะกลับมา
+
+## Lab D: ตรวจ graph และผล rollback
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| รัน `git log --graph --decorate --oneline --all` ใน sandbox | เห็น release tag และ hotfix กลับทั้ง main/develop |
+| เปิด `tracking-contract.txt` บน main และ develop หลัง hotfix | ทั้งสอง branch มี currency contract ที่แก้แล้ว |
+| ตรวจ `git status` และไฟล์หลัง revert | working tree clean; rollback-fixture.txt ถูกย้อนการเพิ่ม แต่ history ยังอยู่ |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] ทำ feature → release → tag ใน sandbox
+- [ ] ทำ hotfix และ merge กลับสอง branch
+- [ ] resolve conflict โดยอ่าน intent และไม่มี conflict markers
+- [ ] revert ordinary commit และเก็บ graph ที่ไม่เผย remote credentials
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายได้ว่าทำไม tag ไม่ใช่ deployment
+- [ ] อธิบายผลถ้า hotfix ไม่กลับ develop
+- [ ] บอกได้ว่า revert โค้ดไม่กู้ tracking events ที่สูญหาย
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
 - [Git branching and merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
 - [git revert](https://git-scm.com/docs/git-revert)
 - [Original Git flow และข้อควรเลือกตามบริบท](https://nvie.com/posts/a-successful-git-branching-model/)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

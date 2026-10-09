@@ -1,5 +1,7 @@
 # QE Foundation Implementation Plan
 
+แผน implementation เดิมเก็บเพื่อ traceability; การปรับเอกสารเป็น self-study ดู [documentation review](../../mentor/documentation-review.md) และ [วิธีทำ lab](../../handbook/learning-guide.md) ไม่ใช้สถานะงานในแผนเป็นผลการเรียนของผู้เรียน
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox syntax for tracking.
 
 **Goal:** สร้างคู่มือภาษาไทย 14 สัปดาห์และ runnable labs สำหรับ Manual QA → QE ที่ตรวจ connected commerce และ tracking/data quality ได้

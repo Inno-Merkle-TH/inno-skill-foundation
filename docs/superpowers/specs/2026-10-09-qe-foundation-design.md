@@ -1,5 +1,7 @@
 # QA → QE Foundation: Connected Commerce & Data Quality
 
+เอกสารออกแบบเก็บไว้เป็นบริบท/ขอบเขตเดิม วิธีเรียนปัจจุบันใช้ [README](../../../README.md) และ [self-study guide](../../handbook/learning-guide.md); ไม่มีคะแนน ทุกบทใช้ lab และ checklist การลงมือทำ/ความเข้าใจ
+
 สถานะ: Design spec รอผู้ใช้รีวิวก่อนจัดทำ implementation plan และคู่มือ/lab
 
 ## 1. เป้าหมายและความเข้าใจร่วมกัน

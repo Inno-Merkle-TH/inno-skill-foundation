@@ -11,3 +11,10 @@
 | Login cancel (extension) | ไม่มี identity link ที่ยังไม่พิสูจน์ |
 | Block OA (extension) | notification fail ไม่เปลี่ยน order success |
 | Forged order ID (extension) | ไม่คืนรายละเอียดคำสั่งซื้อผู้อื่น |
+
+## Checklist ก่อนเก็บหลักฐาน
+
+- [ ] แต่ละ case ระบุ device/browser/config/date และ expected/actual
+- [ ] core cases มี mobile evidence จริงหรือระบุยังไม่ทำ
+- [ ] extension cases ที่ไม่มี implementation ไม่ถูกติ๊กว่า live ผ่าน
+- [ ] ปิด tunnel และ redact session/order keys หลังทดลอง

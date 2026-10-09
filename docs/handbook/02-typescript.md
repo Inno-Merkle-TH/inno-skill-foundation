@@ -2,7 +2,7 @@
 
 ## Prerequisites / เป้าหมาย
 
-ผ่านบท 01 มี Node.js 22.x และ npm เป้าหมายคืออ่านข้อมูลจาก JSON ตรวจ runtime input และเขียน test ทั้ง valid/invalid โดยอธิบายโค้ดเองได้
+ผ่านบท 01 มี Node.js >=22.22.3 <23 และ npm เป้าหมายคืออ่านข้อมูลจาก JSON ตรวจ runtime input และเขียน test ทั้ง valid/invalid โดยอธิบายโค้ดเองได้
 
 ## Mental model / คำศัพท์
 
@@ -40,7 +40,7 @@ Expected: `demo-001: 199 THB` แก้ค่าเป็น string แล้ว
 5. เพิ่ม async exercise: `loadOrders(readText)` ที่รับ function คืน Promise<string>; malformed JSON ต้อง reject ไม่คืน empty success
 6. ส่ง PR พร้อม RED/GREEN evidence และบอกว่าผลรวมหลาย currency ไม่ควรบวกเข้าด้วยกันโดยไม่มี policy
 
-หาก AI ช่วย ต้องระบุส่วนที่ช่วยและตอบ mentor ได้ว่า `unknown`, guard และ Promise ทำอะไร ห้ามส่ง customer JSON ให้ AI
+หาก AI ช่วย ต้องระบุส่วนที่ช่วยและอธิบายได้ว่า `unknown`, guard และ Promise ทำอะไร ห้ามส่ง customer JSON ให้ AI
 
 ## Troubleshooting
 
@@ -50,12 +50,42 @@ Expected: `demo-001: 199 THB` แก้ค่าเป็น string แล้ว
 
 Ctrl+C เมื่อ process ค้าง Coding lab ไม่มี DB ให้ล้าง เก็บ RED/GREEN evidence แล้วกลับ root ด้วย `cd ../..` ถ้าต้องคืน exercise ให้ใช้ sandbox branch ใหม่ ไม่ลบทับงานต้นฉบับ
 
-## เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
-Tests ครอบคลุม valid, empty และ invalid input; ผู้เรียนอธิบายได้ว่าทำไม typecheck ไม่แทน runtime validation และพิสูจน์ test จับ defect ได้ Mentor ดูเฉลยแนวทางแยกใน `docs/mentor/code-answer-guide.md`
+Tests ครอบคลุม valid, empty และ invalid input; ผู้เรียนอธิบายได้ว่าทำไม typecheck ไม่แทน runtime validation และพิสูจน์ test จับ defect ได้ หลังลองเองแล้ว ตรวจแนวทางได้ที่ [code answer guide](../mentor/code-answer-guide.md)
+
+## Lab: ตรวจโค้ดของตนด้วย test matrix
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| เขียน summary tests ใน sandbox ก่อน implementation | empty → 0/0; สองยอด 19900 + 5000 → count 2 / totalMinor 24900 |
+| ส่งเงิน string, currency ผสม และผลรวมเกิน safe integer | reject ตาม policy ที่เขียนไว้ ไม่ silently coerce/รวมเงินต่างสกุล |
+| ให้ `readText` คืน malformed JSON หรือ reject | `loadOrders` reject; ไม่คืน [] เพื่อกลบ failure |
+| เปลี่ยน logic ให้คำนวณผิดใน sandbox แล้วรัน test ก่อนคืนโค้ด | มี assertion fail ที่ตรง defect; ไม่ใช่แค่ import error |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] เก็บ RED/GREEN และรัน typecheck หลังแก้
+- [ ] ทดสอบ empty/valid/invalid และ async failure
+- [ ] ใช้ `validateOrder` ตรวจแต่ละ record หลัง JSON.parse
+- [ ] บันทึก policy currency/overflow และ AI assistance ถ้ามี
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายได้ว่า `unknown` ต้องตรวจอย่างไรก่อนใช้ field
+- [ ] แยก type error, runtime validation error และ rejected Promise ได้
+- [ ] อธิบายว่า test ที่ import ไม่ได้ยังไม่พิสูจน์ business assertion
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
 - [TypeScript for new programmers](https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html)
 - [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
 - [Vitest](https://vitest.dev/guide/)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

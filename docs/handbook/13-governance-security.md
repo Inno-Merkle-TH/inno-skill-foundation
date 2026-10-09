@@ -20,7 +20,7 @@ PDPA/GDPR เป็นคนละกฎหมาย ให้ DPO/legal ตร�
 ## Lab B: security (sandbox เท่านั้น)
 
 1. ตรวจ secrets ไม่อยู่ staged files, screenshots, HAR, analytics หรือ client bundle
-2. ยิง invalid event/schema/LINE signature ต้องปฏิเสธ ไม่มี side effect
+2. ตรวจ invalid event/schema ด้วย API tests และ LINE signature ด้วย unit tests; live webhook route ยังต้อง implement ใน extension ก่อนตรวจ end-to-end
 3. ทดสอบ order ownership ด้วยสอง synthetic users ห้ามใช้ order ID เป็น authorization
 4. ตรวจ DB/admin ไม่เข้าผ่าน public endpoint; ไม่ brute force/scan ระบบภายนอก
 5. รัน `npm audit` และอธิบาย vulnerability/mitigation ไม่ใช้ audit fix --force แบบไม่ review
@@ -36,9 +36,36 @@ PDPA/GDPR เป็นคนละกฎหมาย ให้ DPO/legal ตร�
 
 Artifacts มี owner และ evidence ของแต่ละ control ไม่ใช้ real data ถ้าพบ secret leak หยุดแชร์ artifact, แจ้ง owner และ rotate/revoke ตาม procedure การลบ commit ปัจจุบันอย่างเดียวไม่ลบข้อมูลจาก history
 
-## เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 ทำ risk register ที่มี likelihood/impact/mitigation/owner/deadline มีอย่างน้อยหนึ่ง no-go security case แม้ functional tests ผ่าน บอก unverified legal items ให้ DPO ไม่ประกาศ PDPA/GDPR compliant จาก lab
+
+## Lab: ตรวจ risk ด้วย evidence ไม่ใช่คำรับรอง
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| เติม inventory สำหรับ order, event, session และ LINE identity | แต่ละชุดมี purpose/access/retention/owner และ legal items ที่ยังรอ |
+| รัน `npm audit` จาก labs/qe-code แล้วตรวจ staged diff ใน sandbox | บันทึกวันที่/findings; ไม่ใช้ผล audit แทน security review ทั้งระบบ |
+| ใช้สอง synthetic users ทดสอบ endpoint ที่มี ownership จริง | user A อ่านของ B ไม่ได้; หาก route ยังไม่มีให้บันทึก design-only |
+| ทำ tabletop: พบ token ใน artifact ที่แชร์ | หยุดแชร์ แจ้ง owner revoke/rotate และตรวจ exposure/history ตาม procedure |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] มี data inventory และ trust boundary ของ journey
+- [ ] ทดสอบ schema/signature ที่มี implementation และแยก route ที่ยังไม่มี
+- [ ] บันทึก access matrix, risk owner และ no-go case
+- [ ] ทำ ADR และบันทึก AI/source review โดยไม่ส่งข้อมูลจริง
+- [ ] ระบุเรื่อง PDPA/GDPR ที่ต้อง DPO/legal ตัดสิน ไม่ประกาศ compliant
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบาย consent analytics ต่างจากฐานประมวลผล order
+- [ ] บอกได้ว่าลบ secret จาก latest commit ยังไม่พออย่างไร
+- [ ] อธิบายว่าทำไม functional green แต่อาจต้อง no-go
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
@@ -46,3 +73,7 @@ Artifacts มี owner และ evidence ของแต่ละ control ไ�
 - [GDPR authoritative text](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
 - [PDPC Thailand](https://www.pdpc.or.th/) — ให้ DPO ตรวจเอกสารต้นฉบับ; endpoint เปิดตรวจผ่านเครื่องมือนี้ไม่สำเร็จ ณ 2026-10-09
 - [Claude Skills](https://code.claude.com/docs/en/skills)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

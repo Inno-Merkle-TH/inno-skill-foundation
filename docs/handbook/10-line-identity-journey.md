@@ -28,9 +28,38 @@ Expected: mapping อธิบายขอบเขต IDs ได้และบ
 
 Provider ไม่ขึ้น: ตรวจ Admin role ไม่เลือก provider อื่นเพื่อข้ามปัญหา UID mismatch: ตรวจ Provider scope ก่อน join ไม่เทียบด้วย display name/email Cleanup เก็บ inventory แบบ redacted ไม่ลบ/ย้าย Provider ใน lab
 
-## เกณฑ์ผ่าน / references
+## หลักฐานและ References
 
 ผู้เรียนอธิบาย difference account/channel/user พร้อม threat case ของ order ownership และผลของ attribution loss
 
 - [LINE Provider selection constraints](https://developers.line.biz/en/docs/messaging-api/getting-started/)
 - [Secure account linking](https://developers.line.biz/en/docs/messaging-api/linking-accounts/)
+
+## Lab: ทำ identity map โดยยังไม่ต้องเปิด API
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| ใช้ aliases วาด OA → Messaging channel → Provider และ Login channel | แยก OA Basic ID/Channel ID/Provider ID/UID/web customer |
+| ทำตาราง friend yes/no × login yes/no × consent yes/no | ไม่อนุมานสถานะหนึ่งจากอีกสถานะ; ช่องที่ระบบยังไม่มีระบุ not implemented |
+| สมมติ request ส่ง order ของ user B แต่ session เป็น user A | คาดว่าจะถูกปฏิเสธโดย ownership check ไม่เชื่อ UID/order ID จาก client |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] เติม channel inventory เฉพาะข้อมูล nonsecret ที่มีจริง
+- [ ] ระบุ intended Provider/owner และผลที่แก้กลับไม่ได้ก่อน enable
+- [ ] ทำ mobile journey พร้อม UTM/session/consent observations
+- [ ] แยก conceptual identity review จาก live verified account linking
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายขอบเขต UID และเหตุที่ห้าม join ด้วย display name
+- [ ] อธิบายได้ว่า UTM เป็น attribution ไม่ใช่ authorization
+- [ ] ระบุจุดที่ต้องตรวจเจ้าของ order ก่อนส่งรายละเอียดผ่าน LINE
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

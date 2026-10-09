@@ -1,5 +1,7 @@
 # Native ledger — plan: docs/superpowers/plans/2026-10-09-qe-foundation.md
 
+เอกสารนี้เป็นลำดับเหตุการณ์ implementation ไม่ใช่ checklist ผู้เรียน สถานะเก่าระหว่างทำงานคงไว้เพื่อ traceability; ดู Delivery ด้านล่างและ [documentation review](documentation-review.md) สำหรับงานปรับคู่มือล่าสุด
+
 ## Preflight rulings
 
 - Ruling: ใช้ directory ปัจจุบันโดยไม่ init Git/worktree — ยังไม่มี repository และ plan ห้ามสร้างเอง — ต้นทุนหากผิดคือไม่มี Git recovery; เก็บ ledger และไม่ลบไฟล์ต้นฉบับ

@@ -1,6 +1,6 @@
 # Mentor: beginner code review
 
-อย่าแจกไฟล์นี้ก่อนผู้เรียนลองเอง
+เปิดหลังลองเขียน tests และ implementation เอง ใช้ตรวจเหตุผล ไม่คัดลอกคำตอบแล้วอ้างว่าเข้าใจ หลังอ่านให้เปลี่ยน fixture อีกชุดและทำนายผลก่อนรัน
 
 Summary exercise ต้องคืน count ตามจำนวนรายการและ totalMinor ตามยอดรวมใน currency เดียว ใช้ safe integer และห้าม silently รวมหลาย currency ให้ผู้เรียนเสนอ policy (reject หรือ group) ก่อนเพิ่ม interface
 

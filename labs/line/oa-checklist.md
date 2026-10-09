@@ -12,4 +12,6 @@
 - [ ] Logs/screenshots ไม่มี tokens/real UID
 - [ ] ปิด tunnel และคืน local URL หลัง lab
 
-ไม่มีเครื่องหมายผ่านล่วงหน้า Mentor ต้องตรวจบัญชีจริงของผู้เรียน
+ไม่มีเครื่องหมายผ่านล่วงหน้า ตรวจด้วยบัญชีทดลองจริงและบันทึก expected/actual; owner review ก่อนผูก Provider/เปิด public endpoint ตาม policy
+
+ทำตาม [บท OA](../../docs/handbook/09-line-oa.md) แล้วบันทึกผลใน [learning evidence](../../templates/learning-evidence.md) ข้อที่ยังไม่มีบัญชีหรือสิทธิ์ให้ระบุยังไม่ทำ ไม่ถือว่าผ่านจากภาพตัวอย่าง

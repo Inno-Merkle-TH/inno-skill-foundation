@@ -45,9 +45,35 @@ Port allocated: หยุดและตรวจเจ้าของ port ไ�
 
 จาก `labs/commerce`: `docker compose down` หยุด services โดยเก็บ volumes อย่าใช้ `down -v` เพราะลบ DB และสินค้า การ reset แบบล้างข้อมูลยังไม่อยู่ในบทนี้ เก็บ volume ไว้สำหรับบท backup/recovery
 
-## Exercise / เกณฑ์ผ่าน
+## หลักฐานที่เก็บ
 
 วาด data flow พร้อมจุดล้มเหลว หยุด app แล้วบันทึก impact เทียบกับ restart และอธิบายความต่าง restart/persistence/backup/HA ส่ง manual checkout evidence และ smoke output ไม่ใช้ smoke แทน browser checkout
+
+## Lab: พิสูจน์ tier และ persistence
+
+ทำหลัง lab หลัก; เปลี่ยนทีละตัวแปรใน sandbox และบันทึกผลก่อนคืนค่า
+
+| ทดลอง | ผลที่ใช้ตรวจตัวเอง |
+|---|---|
+| ทำ checkout ด้วย synthetic data แล้วเปิด order ใน local admin | order ID/ยอด 199 THB ตรงกัน; ไม่ใช่การชำระเงินจริง |
+| restart wordpress แล้วเปิดสินค้า/order เดิม | ข้อมูลยังอยู่ใน DB/volume; ไม่ได้พิสูจน์ backup |
+| เรียก public `/wp-login.php` เทียบ local admin port | 8080 ได้ 403; 8081 login page ได้ 200 |
+| หยุด wordpress ชั่วคราวแล้วเปิดกลับด้วย `docker compose start wordpress` | บันทึกผลขณะล้มและหลังฟื้น ไม่หยุด DB เพื่อทดสอบ app |
+
+## Checklist — ลงมือทำครบหรือยัง
+
+- [ ] setup และ smoke ผ่านก่อน manual checkout
+- [ ] วาด browser/proxy/app/DB และตำแหน่ง volume
+- [ ] ตรวจ DB ไม่ publish host port; password ไม่อยู่ในหลักฐาน
+- [ ] เก็บ order ID ก่อน/หลัง restart และคืน service ให้พร้อมบทถัดไป
+
+## Checklist — อธิบายด้วยตัวเองได้ไหม
+
+- [ ] อธิบายได้ว่าทำไม 4 containers ไม่จำเป็นต้องเป็น 4 tiers
+- [ ] บอกความต่าง image/container/volume/network ด้วยระบบนี้
+- [ ] อธิบายเหตุผลที่ `down -v` ไม่ใช่ cleanup ปกติ
+
+ติ๊กเมื่อมีหลักฐานหรืออธิบายพร้อมตัวอย่างได้; ข้อที่ติดให้บันทึกสาเหตุ/สิ่งที่จะลองต่อ ไม่ต้องคิดคะแนน ดู [วิธีตรวจตัวเอง](learning-guide.md) และ [แบบบันทึกผล](../../templates/learning-evidence.md)
 
 ## References
 
@@ -55,3 +81,7 @@ Port allocated: หยุดและตรวจเจ้าของ port ไ�
 - [WordPress official image](https://hub.docker.com/_/wordpress)
 - [WP-CLI plugin install](https://developer.wordpress.org/cli/commands/plugin/install/)
 - [WooCommerce HPOS](https://developer.woocommerce.com/docs/features/orders/high-performance-order-storage/) — อย่าสมมติ orders อยู่ wp_posts เสมอ
+
+---
+
+[สารบัญหลักสูตร](../../README.md) · [วิธีทำ lab และตรวจตัวเอง](learning-guide.md)

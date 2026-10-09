@@ -11,3 +11,9 @@
 - Uploaded asset และ order ownership verification:
 - Remaining SPOFs / unverified checks:
 - Owner / remediation / release decision:
+
+## Checklist ก่อนเก็บหลักฐาน
+
+- [ ] เก็บ baseline และเป้าหมายก่อน outage พร้อม timestamp UTC
+- [ ] พิสูจน์ restore แยก primary และตรวจ counts/value/assets
+- [ ] ระบุ stores ที่ไม่ได้ backup และ observed loss/duplicates แยกจากเป้าหมาย

@@ -18,3 +18,9 @@ Collector reference ในรุ่นนี้ validate/persist เฉพาะ
 - PII allowlist, retention และ access:
 - Version/change approval:
 - Missing/invalid/duplicate thresholds และ escalation owner:
+
+## Checklist ก่อนเก็บหลักฐาน
+
+- [ ] ระบุ implemented purchase แยกจาก events ที่ยังออกแบบ
+- [ ] fields/money/items/consent/trigger ตรง source contract
+- [ ] ระบุ dedup/window/exclusions และผู้รับผิดชอบเมื่อข้อมูลไม่ตรง
