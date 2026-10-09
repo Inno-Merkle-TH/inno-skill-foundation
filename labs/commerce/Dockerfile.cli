@@ -1,0 +1,4 @@
+FROM wordpress:cli-2.12.0-php8.3
+COPY seed.php /lab/seed.php
+COPY qe-lab.php /lab/qe-lab.php
+COPY snapshot.php /lab/snapshot.php

@@ -1,0 +1,30 @@
+import { expect, test } from '@playwright/test';
+
+test('synthetic checkout creates order and delivers one validated purchase', async ({ page }) => {
+  await page.goto('/shop/');
+  await page.getByRole('link', { name: 'Synthetic QE Notebook', exact: true }).click();
+  await page.getByRole('button', { name: 'Add to cart', exact: true }).click();
+  await page.goto('/checkout/');
+  await page.locator('#billing_first_name').fill('Synthetic');
+  await page.locator('#billing_last_name').fill('Tester');
+  await page.locator('#billing_country').selectOption('TH');
+  await page.locator('#billing_address_1').fill('LAB ONLY DO NOT SHIP');
+  await page.locator('#billing_city').fill('Bangkok');
+  await page.locator('#billing_state').selectOption('TH-10');
+  await page.locator('#billing_postcode').fill('10110');
+  await page.locator('#billing_phone').fill('0000000000');
+  await page.locator('#billing_email').fill('synthetic@example.invalid');
+  await page.getByRole('button', { name: 'Allow lab analytics' }).click();
+  const purchase = page.waitForResponse(response => response.url().endsWith('/lab-events') && response.request().method() === 'POST');
+  await page.locator('#place_order').click();
+  await expect(page).toHaveURL(/order-received/);
+  await expect(page.getByRole('heading', { name: 'Order completed', exact: true })).toBeVisible();
+  const response = await purchase;
+  expect(response.status()).toBe(202);
+  const event = response.request().postDataJSON();
+  expect(event.eventName).toBe('purchase');
+  expect(event.valueMinor).toBe(19900);
+  expect(event.currency).toBe('THB');
+  expect(event.transactionId).toBeTruthy();
+  expect(event).not.toHaveProperty('email');
+});

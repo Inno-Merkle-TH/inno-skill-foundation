@@ -1,0 +1,12 @@
+services:
+  wordpress-b:
+    extends:
+      file: compose.yaml
+      service: wordpress
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.proxy-ha
+    depends_on:
+      wordpress-b:
+        condition: service_healthy
