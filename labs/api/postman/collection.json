@@ -1,0 +1,429 @@
+{
+  "info": {
+    "name": "QE local ownership and CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8090"
+    },
+    {
+      "key": "tokenA",
+      "value": ""
+    },
+    {
+      "key": "tokenB",
+      "value": ""
+    },
+    {
+      "key": "runId",
+      "value": "replace-each-run"
+    },
+    {
+      "key": "resourceId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Missing credentials",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": ""
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources"
+      },
+      "x-qe-expected": {
+        "status": 401
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(401));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"Notebook\",\"clientRequestId\":\"{{runId}}\"}"
+        }
+      },
+      "x-qe-expected": {
+        "status": 201,
+        "kind": "capture"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"resourceId\", pm.response.json().id);",
+              "pm.test(\"Created resource\", () => pm.expect(pm.response.json()).to.include({title:\"Notebook\",version:1}));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Read own",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}"
+      },
+      "x-qe-expected": {
+        "status": 200
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Other owner denied",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenB}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}"
+      },
+      "x-qe-expected": {
+        "status": 404
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Other owner list",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenB}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources"
+      },
+      "x-qe-expected": {
+        "status": 200,
+        "kind": "empty"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Owner isolation\", () => pm.expect(pm.response.json()).to.eql({items:[],total:0}));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Repeat",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"Notebook\",\"clientRequestId\":\"{{runId}}\"}"
+        }
+      },
+      "x-qe-expected": {
+        "status": 200
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Changed retry",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"Changed\",\"clientRequestId\":\"{{runId}}\"}"
+        }
+      },
+      "x-qe-expected": {
+        "status": 409
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"Updated\",\"version\":1}"
+        }
+      },
+      "x-qe-expected": {
+        "status": 200,
+        "kind": "version"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Version increment\", () => pm.expect(pm.response.json().version).to.eql(2));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stale update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"Stale\",\"version\":1}"
+        }
+      },
+      "x-qe-expected": {
+        "status": 409
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bad pagination",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources?limit=0"
+      },
+      "x-qe-expected": {
+        "status": 400
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}"
+      },
+      "x-qe-expected": {
+        "status": 204
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deleted missing",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{tokenA}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/resources/{{resourceId}}"
+      },
+      "x-qe-expected": {
+        "status": 404
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

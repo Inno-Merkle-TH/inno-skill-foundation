@@ -8,3 +8,6 @@ test-results/
 evidence/private/
 backups/
 .DS_Store
+.state/
+labs/mobile/apps/
+labs/mobile/.appium/

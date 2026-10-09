@@ -1,0 +1,22 @@
+{
+  "name": "qe-api-training",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.3 <23"
+  },
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test:collection": "tsx scripts/run-collection.ts",
+    "test:release": "tsx scripts/release-rehearsal.ts"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.15",
+    "typescript": "6.0.2",
+    "tsx": "4.23.15",
+    "vitest": "4.1.11"
+  }
+}
