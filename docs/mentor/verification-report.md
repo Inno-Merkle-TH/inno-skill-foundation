@@ -46,3 +46,10 @@ Runtime tests และ Git rehearsal จะบันทึกเมื่อร
 - Scoped independent re-review: ทั้งสาม Important ADDRESSED ไม่มี Important ใหม่ใน fix scope; runtime tests เป็น executor evidence
 - Final `npm ci/test/typecheck/audit` ผ่าน, 46 tests; snapshot integrity 1 test; browser E2E 1 test ผ่านหลัง rebuild ล่าสุด
 - Core backup ไม่รวม eventdb/LINE/GA4; restore validation ไม่พิสูจน์ end-to-end recovery ทุก store; ระบุในบท reliability
+
+## GitHub delivery
+
+- Initial implementation commit `870d8d209ecb47a2a693f159d606c12fdaee5a85` push ไป `Inno-Merkle-TH/inno-skill-foundation` main สำเร็จ
+- GitHub Actions run `37917734578`: completed/success สำหรับ npm ci, 46 unit/API tests, typecheck และ snapshot-integrity test
+- Run evidence: https://github.com/Inno-Merkle-TH/inno-skill-foundation/actions/runs/37917734578
+- ข้อความ “CI ยังไม่ได้รัน” ด้านบนเป็นสถานะก่อน push; ผลส่วนนี้เป็นหลักฐานล่าสุด UI/Docker/recovery เป็น local verification ไม่ใช่ CI
