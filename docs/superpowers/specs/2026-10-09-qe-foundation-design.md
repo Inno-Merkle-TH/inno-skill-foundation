@@ -81,7 +81,7 @@ Privacy/security เป็น guardrail ตั้งแต่สัปดาห�
 ```text
 README.md                   เส้นทางเริ่มต้นและ learning map
 docs/handbook/               บทเรียนภาษาไทย
-docs/mentor/                 facilitation, rubric, answer guidance
+docs/mentor/                 facilitation, safety checklist, answer guidance
 labs/commerce/              Compose, proxy, fixtures, reset/backup
 labs/qe-code/               TypeScript/API/UI exercises
 labs/tracking/              collector, schema, seeded failures
@@ -159,7 +159,7 @@ PDPA/GDPR สอน data minimization, lawful basis, purpose, rights, processor/
 
 ## 10. การประเมินและ verification ของ lab
 
-Rubric: coding/automation 25%, tracking/data quality 30%, architecture/reliability 20%, privacy/security/governance 15%, communication/evidence 10% เกณฑ์ผ่านที่เสนอคือ 75/100 และผ่าน safety gate ทั้งหมด คะแนนรวมชดเชย secret leak หรือ unauthorized data access ไม่ได้
+ทบทวนผลจาก coding/automation, tracking/data quality, architecture/reliability, privacy/security/governance และ evidence โดยไม่มีเกณฑ์ให้คะแนน ตรวจ safety checklist ก่อนส่งมอบ และทำ remediation หากพบ secret leak หรือ unauthorized data access
 
 ทุก checkpoint ใช้ seeded defect อย่างน้อยหนึ่งกรณี ผู้เรียนต้องอธิบายสาเหตุและผลกระทบพร้อมหลักฐาน mentor ตรวจโค้ดที่ AI ช่วยสร้างด้วยคำถาม/การแก้โจทย์สั้น ๆ
 

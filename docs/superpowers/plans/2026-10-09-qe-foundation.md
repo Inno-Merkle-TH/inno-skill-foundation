@@ -15,7 +15,7 @@
 - 14 สัปดาห์ สัปดาห์ละ 6–8 ชั่วโมง; ผู้เรียนเป็น Manual QA ไม่มี prerequisite เขียนโปรแกรม
 - ข้อมูล synthetic เท่านั้น ไม่มี payment จริง ไม่มี paid dependency ใน core
 - GA4 และ LINE API/Login เป็น extension; OA setup และ tracking validation เป็น core
-- แต่ละบทมี prerequisites, mental model, steps, expected output, troubleshooting, reset, exercise, rubric, official references
+- แต่ละบทมี prerequisites, mental model, steps, expected output, troubleshooting, reset, exercise, result checks, official references
 - Secrets อยู่ server-side; ห้าม expose database/admin/debug tools ผ่าน tunnel
 - Single-host app failover ไม่ใช่ production HA
 - ไม่ commit, สร้าง branch หรือ init Git repository จนกว่าผู้ใช้ร้องขอ; ใช้ review checkpoints แทน commits
@@ -41,7 +41,7 @@ Phase C: Tasks 9–11 เพิ่ม reliability, governance และตรว
 
 ### Task 1: Learning map, setup และบทพื้นฐาน
 
-**Files:** `README.md`, `docs/handbook/00-setup.md`, `01-http-git.md`, `02-typescript.md`, `03-git-flow.md`, `docs/mentor/rubric.md`, `templates/learning-evidence.md`
+**Files:** `README.md`, `docs/handbook/00-setup.md`, `01-http-git.md`, `02-typescript.md`, `03-git-flow.md`, `docs/mentor/safety-checklist.md`, `templates/learning-evidence.md`
 
 **Interfaces:** Produces setup checklist และ evidence layout ที่ทุก lab ใช้; คำสั่งรันจาก root หรือ `labs/qe-code` ต้องระบุเสมอ
 
@@ -151,9 +151,9 @@ Phase C: Tasks 9–11 เพิ่ม reliability, governance และตรว
 
 **Files:** `docs/handbook/13-governance-security.md`, `14-capstone.md`, `extensions/ga4.md`, `templates/risk-register.md`, `data-inventory.md`, `release-review.md`, `adr.md`, `docs/mentor/capstone-guide.md`
 
-**Interfaces:** Rubric Task 1 weights 25/30/20/15/10; pass 75 plus safety gates; consumes Task 4 report and Task 9 recovery evidence
+**Interfaces:** Safety checklist Task 1; consumes Task 4 report and Task 9 recovery evidence; ไม่มีเกณฑ์ให้คะแนน
 
-- [ ] สร้าง mentor cases: secret leak, IDOR, missing purchase, consent exclusion, duplicated notification และ release ที่ต้อง no-go แม้คะแนนเกิน 75
+- [ ] สร้าง mentor cases: secret leak, IDOR, missing purchase, consent exclusion, duplicated notification และ release ที่ต้อง no-go แม้ functional tests ผ่าน
 - [ ] เขียน data/AI/product governance exercises พร้อม owner, mitigation, residual risk, evidence และ rollback; PDPA/GDPR อ้าง authoritative sources และ DPO review ไม่ให้คำรับรอง legal compliance
 - [ ] เขียน capstone instructions ที่ผู้เรียนต้องแก้ seeded defects และ defend release decision โดยแยก core/extension score
 - [ ] เขียน GA4 optional tracking mapping และ DebugView/collection/report delay checks จาก official docs; ไม่มี BigQuery หรือ paid plugin dependency
@@ -173,7 +173,7 @@ Phase C: Tasks 9–11 เพิ่ม reliability, governance และตรว
 
 ## Self-review และ execution handoff
 
-ครอบคลุม spec ทั้ง learning sequence, core/extension, consent/tracking, identity, free route, HA caveats, rubric และ references งานเอกสารใช้ acceptance walkthrough; implementation code ใช้ failing test → minimal implementation → verification แยกจาก account-dependent checks
+ครอบคลุม spec ทั้ง learning sequence, core/extension, consent/tracking, identity, free route, HA caveats, safety checks และ references งานเอกสารใช้ acceptance walkthrough; implementation code ใช้ failing test → minimal implementation → verification แยกจาก account-dependent checks
 
 Tasks 4–5 แชร์ event contract: executor สร้าง type contract ก่อน Task 4 tests แล้ว implement collector ใน Task 5 โดยไม่เปลี่ยนชื่อ fields ภายหลัง งานนี้แนะนำ Native execution เพราะ interfaces ต่อเนื่องและ repo ยังไม่มีระบบเดิม ลด coordination/context overhead; หากไม่มี independent reviewer tool ต้องระบุว่าใช้ self-review ไม่ปลอมผล independent review
 

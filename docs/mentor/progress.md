@@ -18,7 +18,7 @@
 | 2/5/6/7/8 | proxy paths, local/public URLs | ยึด plan port/routes; ไม่เปิด admin/public DB |
 | 3/4/5 | OrderRecord/PurchaseEvent | minor units/UTC/consent; contract สร้างก่อน reconciliation |
 | 4/9/10 | reconciliation evidence | denominator eligible; outage ไม่เท่ากับ lost data โดยอัตโนมัติ |
-| 1/10/11 | rubric/evidence | safety gates ไม่ชดเชยด้วยคะแนน |
+| 1/10/11 | safety/evidence | ตรวจความปลอดภัยและหลักฐานก่อนส่งมอบ |
 
 ## Progress
 

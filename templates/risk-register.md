@@ -4,4 +4,4 @@
 |---|---|---|---|---|---|---|---|---|---|
 | R01 | order สำเร็จแต่ purchase event หาย | revenue report ต่ำกว่าจริง | ระบุ | ระบุ | consent-aware reconciliation | path | ระบุ | ระบุ | go/no-go |
 
-Risk score ช่วยจัดลำดับแต่ไม่แทน safety gates: secret leak/unauthorized access/consent bypass ต้อง remediation ไม่ใช้คะแนนเฉลี่ยกลบ
+ระดับความเสี่ยงช่วยจัดลำดับแต่ไม่แทน safety checks: secret leak/unauthorized access/consent bypass ต้อง remediation ก่อนส่งมอบ

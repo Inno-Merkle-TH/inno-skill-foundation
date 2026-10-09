@@ -20,7 +20,7 @@
 
 ## Deliverables
 
-PR/code, tests/outputs, tracking plan, data inventory, risk register, recovery report, release decision และ AI assistance disclosure Mentor ใช้ rubric 75/100 + safety gates LINE API/Login/GA4 เป็น optional extension ไม่หัก core scoreเพราะไม่มี paid account
+PR/code, tests/outputs, tracking plan, data inventory, risk register, recovery report, release decision และ AI assistance disclosure ตรวจความถูกต้องของผลและ [safety checklist](../mentor/safety-checklist.md) LINE API/Login/GA4 เป็น optional extension
 
 ## Troubleshooting / cleanup
 
@@ -30,6 +30,6 @@ PR/code, tests/outputs, tracking plan, data inventory, risk register, recovery r
 
 ผู้เรียนตอบได้ “อะไรอาจพัง, เราจะรู้ได้อย่างไร, ใครรับความเสี่ยง, กู้ข้อมูลอย่างไร” และสาธิต seeded defect ด้วย test ที่ fail ก่อน fix
 
-- [Rubric](../mentor/rubric.md)
+- [Safety checklist](../mentor/safety-checklist.md)
 - [Release review](../../templates/release-review.md)
 - [OWASP testing](https://owasp.org/www-project-web-security-testing-guide/)

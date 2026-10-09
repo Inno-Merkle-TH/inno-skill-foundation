@@ -1,31 +1,16 @@
 # QA → QE Foundation
 
-คู่มือภาษาไทยสำหรับ Manual QA ที่ต้องการเขียนโค้ดและตรวจความเสี่ยงด้าน tracking/data quality ผ่านร้านค้า WordPress/WooCommerce + LINE OA เดียว
+เรียนรู้ coding, automation, tracking/data quality และ system reliability ผ่าน WordPress/WooCommerce + LINE OA
 
-## สำหรับใคร และควรได้อะไรเมื่อจบ
+**LINE OA → ร้านค้า → cart/checkout → order → tracking → reconciliation → release review**
 
-เหมาะกับ Manual QA ที่ยังไม่คล่อง coding เป้าหมายคืออธิบายระบบ เขียน tests ตรวจข้อมูล และเสนอ release decision พร้อมความเสี่ยงได้ ไม่ใช่แค่ใช้เครื่องมือครบ
-
-Journey ที่ใช้ตลอดหลักสูตร: **LINE OA → ร้านค้า → cart/checkout → order → tracking → reconciliation → release review**
-
-## เริ่มต้นตามบทบาท
-
-**ผู้เรียน**
+## เริ่มต้น
 
 1. อ่าน [เตรียมเครื่อง](docs/handbook/00-setup.md)
 2. ทำ [HTTP และ Git/GitHub](docs/handbook/01-http-git.md)
 3. ทำ [TypeScript](docs/handbook/02-typescript.md)
 4. ทำ [Git flow](docs/handbook/03-git-flow.md)
 5. ส่งหลักฐานตาม [แบบฟอร์ม](templates/learning-evidence.md) ให้ mentor ตรวจ
-
-**Mentor / หัวหน้าทีม**
-
-1. อ่าน [เกณฑ์คะแนนและ safety gates](docs/mentor/rubric.md) ก่อนเปิด cohort
-2. ตรวจ [acceptance checklist](docs/mentor/acceptance.md) และ [ผล verification/ข้อจำกัด](docs/mentor/verification-report.md)
-3. เตรียม sandbox repository, test accounts และเวลาตรวจ PR โดยไม่ใช้ production
-4. ใช้ [mentor capstone guide](docs/mentor/capstone-guide.md) เตรียม seeded defects และให้ผู้เรียนอธิบายผลเอง
-
-ใช้เวลาเป้าหมาย 14 สัปดาห์ สัปดาห์ละ 6–8 ชั่วโมง: concept 1 ชั่วโมง, guided lab 2 ชั่วโมง, exercise 2–3 ชั่วโมง, review 1 ชั่วโมง ไม่ต้องรีบขึ้นระดับถ้ายังอธิบายงานเองไม่ได้
 
 ## Learning map — คลิกเข้าบทเรียนได้เลย
 
@@ -171,7 +156,7 @@ E2E สร้าง synthetic orders จริงใน lab volume อย่า�
 
 **สำหรับ mentor** — แยกจากโจทย์ผู้เรียน ไม่แจกเฉลยก่อนลองเอง
 
-- [Rubric/safety gates](docs/mentor/rubric.md) · [Acceptance checklist](docs/mentor/acceptance.md)
+- [Safety checklist](docs/mentor/safety-checklist.md) · [Acceptance checklist](docs/mentor/acceptance.md)
 - [Code answer guide](docs/mentor/code-answer-guide.md) · [SQL answer guide](docs/mentor/sql-answers.sql) · [Capstone guide](docs/mentor/capstone-guide.md)
 - [Verification report](docs/mentor/verification-report.md) · [Reference review](docs/mentor/reference-review.md) · [Progress/decisions](docs/mentor/progress.md)
 
