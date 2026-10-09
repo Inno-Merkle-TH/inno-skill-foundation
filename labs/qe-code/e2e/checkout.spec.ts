@@ -1,22 +1,12 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures.js';
+import { syntheticBuyer } from './data/buyer.js';
 
-test('synthetic checkout creates order and delivers one validated purchase', async ({ page }) => {
-  await page.goto('/shop/');
-  await page.getByRole('link', { name: 'Synthetic QE Notebook', exact: true }).click();
-  await page.getByRole('button', { name: 'Add to cart', exact: true }).click();
+test('synthetic checkout creates order and delivers one validated purchase', async ({ page, storefront }) => {
+  await storefront.addNotebookToCart();
   await page.goto('/checkout/');
-  await page.locator('#billing_first_name').fill('Synthetic');
-  await page.locator('#billing_last_name').fill('Tester');
-  await page.locator('#billing_country').selectOption('TH');
-  await page.locator('#billing_address_1').fill('LAB ONLY DO NOT SHIP');
-  await page.locator('#billing_city').fill('Bangkok');
-  await page.locator('#billing_state').selectOption('TH-10');
-  await page.locator('#billing_postcode').fill('10110');
-  await page.locator('#billing_phone').fill('0000000000');
-  await page.locator('#billing_email').fill('synthetic@example.invalid');
   await page.getByRole('button', { name: 'Allow lab analytics' }).click();
   const purchase = page.waitForResponse(response => response.url().endsWith('/lab-events') && response.request().method() === 'POST');
-  await page.locator('#place_order').click();
+  await storefront.completeCheckout(syntheticBuyer(`granted-${Date.now()}`));
   await expect(page).toHaveURL(/order-received/);
   await expect(page.getByRole('heading', { name: 'Order completed', exact: true })).toBeVisible();
   const response = await purchase;

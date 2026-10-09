@@ -1,0 +1,667 @@
+[
+  {
+    "id": "01",
+    "path": "docs/handbook/01-quality-engineering.md",
+    "prerequisites": [],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "02",
+    "path": "docs/handbook/02-requirements.md",
+    "prerequisites": [
+      "01"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "03",
+    "path": "docs/handbook/03-test-strategy.md",
+    "prerequisites": [
+      "02"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "04",
+    "path": "docs/handbook/04-test-design.md",
+    "prerequisites": [
+      "03"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "05",
+    "path": "docs/handbook/05-exploratory-testing.md",
+    "prerequisites": [
+      "04"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "06",
+    "path": "docs/handbook/06-workstation-git.md",
+    "prerequisites": [
+      "05"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "07",
+    "path": "docs/handbook/07-http-rest.md",
+    "prerequisites": [
+      "06"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "08",
+    "path": "docs/handbook/08-architecture.md",
+    "prerequisites": [
+      "07"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "09",
+    "path": "docs/handbook/09-javascript.md",
+    "prerequisites": [
+      "08"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "10",
+    "path": "docs/handbook/10-typescript-async.md",
+    "prerequisites": [
+      "09"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "11",
+    "path": "docs/handbook/11-unit-testing-debugging.md",
+    "prerequisites": [
+      "10"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "12",
+    "path": "docs/handbook/12-docker-environments.md",
+    "prerequisites": [
+      "11"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "13",
+    "path": "docs/handbook/13-sql-test-data.md",
+    "prerequisites": [
+      "12"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "14",
+    "path": "docs/handbook/14-postman-api.md",
+    "prerequisites": [
+      "13"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "15",
+    "path": "docs/handbook/15-api-automation.md",
+    "prerequisites": [
+      "14"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "16",
+    "path": "docs/handbook/16-playwright-framework.md",
+    "prerequisites": [
+      "15"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "17",
+    "path": "docs/handbook/17-automation-maintenance.md",
+    "prerequisites": [
+      "16"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "18",
+    "path": "docs/handbook/18-mobile-strategy.md",
+    "prerequisites": [
+      "17"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "19",
+    "path": "docs/handbook/19-appium.md",
+    "prerequisites": [
+      "18"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "20",
+    "path": "docs/handbook/20-continuous-testing.md",
+    "prerequisites": [
+      "15",
+      "17"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "21",
+    "path": "docs/handbook/21-defect-lifecycle.md",
+    "prerequisites": [
+      "20"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "22",
+    "path": "docs/handbook/22-line-oa-journey.md",
+    "prerequisites": [
+      "12",
+      "16",
+      "18"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "23",
+    "path": "docs/handbook/23-tracking-reconciliation.md",
+    "prerequisites": [
+      "13",
+      "15",
+      "16"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "24",
+    "path": "docs/handbook/24-data-failure-drills.md",
+    "prerequisites": [
+      "23"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "25",
+    "path": "docs/handbook/25-performance-observability.md",
+    "prerequisites": [
+      "15",
+      "20",
+      "23"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "26",
+    "path": "docs/handbook/26-accessibility-compatibility.md",
+    "prerequisites": [
+      "25"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "27",
+    "path": "docs/handbook/27-security-governance.md",
+    "prerequisites": [
+      "26"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "28",
+    "path": "docs/handbook/28-reliability-cloud.md",
+    "prerequisites": [
+      "27"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "29",
+    "path": "docs/handbook/29-sprint-capstone.md",
+    "prerequisites": [
+      "28"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "30",
+    "path": "docs/handbook/30-release-handover.md",
+    "prerequisites": [
+      "29"
+    ],
+    "kind": "core",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  }
+]
