@@ -67,4 +67,6 @@ One read-only final review found no Critical findings and three Important issues
 
 ### Remaining evidence boundaries
 
+Hosted candidate b3ce5637e8cc7c129d9d6e247a532a7df66e3099 passed all five jobs in [run 38058018240](https://github.com/Inno-Merkle-TH/inno-skill-foundation/actions/runs/38058018240): documentation, API, core code, mobile preflight and fresh Docker/browser execution on Ubuntu 24.04. This is Linux CI evidence, not a Windows setup or native-device pass. The manually dispatched extended workflow was not run remotely; performance and recovery evidence above is local.
+
 Native Android/iOS, Postman desktop, live LINE OA/Messaging/Login/ngrok/GA4, paid AI tools and production/cloud security or legal compliance are not verified. The mobile sample and configuration are supplied for separately approved device execution. Checkout retry/idempotency remains unverified in WooCommerce. Hosted CI status must be read for the pushed candidate; local checks alone do not establish a hosted pass.
