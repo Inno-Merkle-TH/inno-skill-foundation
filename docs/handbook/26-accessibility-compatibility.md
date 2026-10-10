@@ -21,7 +21,7 @@ An unlabeled input is detectable by an automated rule. A confusing keyboard jour
 ## Guided Lab
 
 1. Run the controlled accessibility fixture tests in `labs/qe-code/e2e/accessibility.spec.ts`.
-2. Run the separate storefront audit and review findings without suppressing them to make the result green.
+2. From `labs/qe-code`, run `AUDIT_STOREFRONT=1 npx playwright test e2e/accessibility.spec.ts` and review findings without suppressing them to make the result green. Without that environment variable, the storefront audit is skipped; only controlled fixtures run.
 3. Use keyboard only to navigate product/cart/checkout, inspect focus and error handling, and compare approved browser/device combinations.
 
 ## Expected Results

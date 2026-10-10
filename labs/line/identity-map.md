@@ -1,11 +1,11 @@
-# Identity map exercise
+# LINE Identity Map
 
-วาด Provider → Messaging API Channel ↔ OA และ Login Channel ↔ web application เติม nonsecret IDs ใน channel inventory แล้ววาด customer-to-LINE link ที่ยืนยันเจ้าของทั้งสองฝั่งได้
+Draw Provider → Messaging API Channel ↔ OA and Login Channel ↔ web application. Record only nonsecret identifiers in the [channel inventory](../../templates/channel-inventory.md).
 
-คำถาม: ใช้คนละ Provider แล้ว UID ต่างกันจะ reconcile อย่างไร? ทำไม UTM/session cookie ไม่พิสูจน์เจ้าของ LINE account? เป็นเพื่อน OA แปลว่ายินยอม analytics หรือไม่? Login ยกเลิกแล้ว checkout guest ยังทำงานไหม?
+- [ ] Distinguish OA Basic ID, Provider ID, Channel ID, provider-scoped UID and web customer ID.
+- [ ] Use synthetic aliases instead of real user identifiers.
+- [ ] Mark verified account linking and order ownership boundaries.
+- [ ] Explain why UTM, display name or a client-supplied UID is not authorization.
+- [ ] Explain why friendship, login and analytics consent are independent.
 
-## Checklist ก่อนเก็บหลักฐาน
-
-- [ ] วาด Provider/channel/OA/web customer แยกกันได้
-- [ ] ใช้ aliases แทน real UID และชี้ trust boundary ก่อน linking
-- [ ] อธิบาย friend/login/consent ว่าไม่ใช่สถานะเดียวกัน
+If Login is not implemented, label the relevant diagram as design-only.

@@ -1,20 +1,17 @@
-# LINE journey test cases
+# Connected Journey Test Cases
 
-| Case | Expected |
+| Case | Expected evidence |
 |---|---|
-| Add friend | greeting ตาม config |
-| Rich menu shop | shop เดิมและ UTM ตาม tracking plan |
-| In-app → external browser | ตรวจ continuity ไม่สมมติ session เหมือนเดิม |
-| ngrok warning | บันทึก friction ไม่ตีความว่า app bug |
-| Consent deny | checkout ได้ ไม่มี nonessential analytics |
-| Close browser before response | order/event state ต้องตรวจแยก |
-| Login cancel (extension) | ไม่มี identity link ที่ยังไม่พิสูจน์ |
-| Block OA (extension) | notification fail ไม่เปลี่ยน order success |
-| Forged order ID (extension) | ไม่คืนรายละเอียดคำสั่งซื้อผู้อื่น |
+| Add friend | Greeting matches configured behavior |
+| Rich menu shop | Correct shop and intended UTM |
+| In-app to external browser | Observe continuity; do not assume shared session |
+| ngrok warning | Separate warning/friction from application errors |
+| Denied analytics consent | Checkout remains possible; no nonessential collection |
+| Close browser before response | Inspect order and event state independently |
+| Login cancel (extension) | No unverified identity link or session |
+| Block OA (extension) | Notification outcome does not redefine order success |
+| Forged order ID (extension) | No disclosure of another customer's order |
 
-## Checklist ก่อนเก็บหลักฐาน
-
-- [ ] แต่ละ case ระบุ device/browser/config/date และ expected/actual
-- [ ] core cases มี mobile evidence จริงหรือระบุยังไม่ทำ
-- [ ] extension cases ที่ไม่มี implementation ไม่ถูกติ๊กว่า live ผ่าน
-- [ ] ปิด tunnel และ redact session/order keys หลังทดลอง
+- [ ] Record device/browser/build/configuration and expected/actual per case.
+- [ ] Mark unimplemented extension cases as not executed.
+- [ ] Redact order keys/session data and close the tunnel after testing.

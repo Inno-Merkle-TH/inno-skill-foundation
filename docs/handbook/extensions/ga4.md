@@ -1,63 +1,59 @@
-# Extension — GA4 ecommerce
+# E03 — GA4 Ecommerce Verification
 
-## Prerequisites / mental model
+## Outcomes
 
-ผ่าน core tracking มี property ทดลองที่ทีมอนุญาต GA4 เป็น consumer อีกระบบ ไม่ใช่ source of truth ของ orders เปลี่ยน `valueMinor` เป็น currency decimal ตาม GA4 contract ไม่ส่ง custom lab schema ตรง ๆ โดยไม่มี mapping
+Map business events to GA4 and investigate collection versus reporting differences.
 
-## Lab A: event mapping แบบ offline — ไม่ต้องมี property
+## Prerequisites
 
-1. ใช้ synthetic purchase มูลค่า `19900` สตางค์ THB และสินค้าหนึ่งชิ้นจากบท 08
-2. เติม [tracking plan](../../../templates/tracking-plan.md): source field → GA4 field → transform → consent → expected
-3. เขียน expected payload: `transactionId → transaction_id`, `valueMinor → value` เป็น `199`, `itemId → item_id`, quantity/currency ตรง source; mapper ต้องกำหนด event-level value/item price ให้สอดคล้องกัน
-4. ทำ fixture เพิ่ม denied consent, retry transaction เดิม, currency ผิด และ email หลุด; ระบุว่าไม่ควรส่งอะไรและ test ใดจับได้
-5. หากเขียน mapper ใน sandbox ให้ test empty/invalid/items/money และ consent gate โดยไม่เรียก Google จริง
+Lesson 23 and consent/security fundamentals. A live lab requires an approved test property; offline mapping needs no account.
 
-Expected: mapping + payload สังเคราะห์ + expected negative cases; lab นี้ใช้ THB อย่าสมมติทุก currency มีสอง decimal places และอย่านับ mapping review เป็น live collection
+## Concepts
 
-## Lab B: live test property — optional
+GA4 consumes event data; commerce remains the order source of truth. DebugView, collection and processed reporting are different stages. Currency mapping needs explicit units.
 
-1. สร้าง/ใช้ GA4 test property และ web data stream ตาม official setup เลือก ownership/retention/access กับ mentor
-2. ทำ tracking plan mapping `view_item`, `add_to_cart`, `begin_checkout`, `purchase`; purchase มี transaction_id, value, currency และ items ตาม official schema
-3. เพิ่ม instrumentation ผ่านวิธีที่ทีมอนุมัติ (gtag/GTM) โดยไม่ซื้อ paid WordPress plugin; ห้ามวาง API secret ใน client
-4. ทำ consent controls ก่อนเก็บ nonessential data ไม่ใช้ server-side Measurement Protocol เพื่อข้าม consent
-5. เปิด DebugView ตาม docs ตรวจ params แล้วเทียบ collector/commerce data; realtime/debug/processed report เป็นคนละขั้นและมี processing delay
-6. ทดสอบ blocker, deny/revoke, redirect, refresh/duplicate, cross-browser sessions และ timezone/report window
+## Worked Example
 
-## Expected / exercise
+For this THB lab, valueMinor 19900 maps to value 199. Map transactionId to transaction_id and items to GA4 item fields; do not send the lab payload unchanged.
 
-ได้ event ที่ semantic ถูกจาก eligible journey และบอกเหตุผลเมื่อ report ไม่เท่า orders ทั้งหมด แยก configuration defect, deliberate exclusion และ reporting delay ไม่ใช้ DebugView event หนึ่งรายการเป็นหลักฐาน production completeness
+## Guided Lab
 
-## Troubleshooting / cleanup
+1. Offline: map view_item/add_to_cart/begin_checkout/purchase using the tracking-plan template. Only purchase exists in the reference collector; other instrumentation must be developed.
+2. Create valid, denied-consent, wrong-money, duplicate and PII-leak payload examples; assert the mapper and consent gate in a sandbox without calling Google.
+3. Optional live: create a test property/web stream with reviewed ownership and retention. Instrument through approved gtag/GTM, without purchasing a plugin or placing API secrets in the browser.
+4. Inspect network and DebugView, then compare processed reports using aligned timezone/window and eligibility. Test blocker, revoke, redirect and refresh cases.
 
-ไม่เห็น event: ตรวจ consent/network/schema/stream/debug mode ก่อนทำซ้ำ purchase ปิด debug และใช้ synthetic identifiers ไม่ส่ง email/LINE UID หรือ token ลบ test access ตาม policyเมื่อจบ ไม่ต้องต่อ BigQuery
+## Expected Results
 
-## หลักฐานและ References
+A valid debug event is not proof of full reporting completeness. Record collection, processing delay, deliberate exclusion and genuine defects separately.
 
-ส่ง mapping และ evidence ที่ไม่ใส่ PII พร้อม reconciliation caveats ไม่มี GA4 account ให้ทำ mapping exercise ไม่ถือว่า live verified
+## Independent Challenge
 
-- [GA4 ecommerce](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce)
-- [GA4 DebugView](https://support.google.com/analytics/answer/7201382)
+Explain why order totals exceed reported purchases without treating all denied-consent orders as defects.
 
-## Checklist — ลงมือทำครบหรือยัง
+## Troubleshooting
 
-- [ ] mapping ระบุ value units/items/transaction ID และ consent ชัดเจน
-- [ ] offline cases ครอบคลุม wrong value, duplicate และ PII
-- [ ] ถ้าทำ live ใช้ test property และตรวจ network + DebugView
-- [ ] บันทึก timezone/window/processing delay เมื่อเทียบ orders กับ reports
-- [ ] ปิด debug และไม่แนบ PII หรือระบุว่ายังไม่มี live evidence
+Check consent, stream, debug mode, mapping and network before repeatedly creating purchases. Never use server-side collection to bypass consent.
 
-## Checklist — อธิบายด้วยตัวเองได้ไหม
+## Completion Checklist
 
-- [ ] อธิบายเหตุที่ order count ไม่จำเป็นเท่ากับ GA4 purchases
-- [ ] แยก deliberate exclusion, delivery failure และ report delay
-- [ ] อธิบายว่ารับ event ที่ collector ไม่ได้แปลว่า GA4 รับหรือรายงานแล้ว
+- [ ] Created mapping and negative fixtures.
+- [ ] Recorded live results or explicitly marked them unexecuted.
+- [ ] Excluded email/UID/tokens from payloads.
 
-ติ๊กเฉพาะสิ่งที่ทำจริง แยก offline/design/implemented/live ใน [learning evidence](../../../templates/learning-evidence.md); ไม่มีบัญชีให้เก็บ offline lab และระบุ live ยังไม่ทำ
+## Understanding Checklist
 
-## Cleanup ของ offline lab
+- [ ] Explain order truth versus analytics reporting.
+- [ ] Explain why decimal conversion cannot blindly assume every currency has two decimals.
 
-เก็บ fixture/tests ใน sandbox ไม่มีบัญชีหรือ services ให้ลบ หากทดลอง live ให้ทำ cleanup ด้านบนและตรวจว่า credentials ไม่อยู่ใน staged diff
+## Cleanup and Handoff
 
----
+Disable debug instrumentation and test access as appropriate; retain only synthetic evidence. BigQuery is not required.
 
-[สารบัญ](../../../README.md) · [วิธีตรวจตัวเอง](../learning-guide.md)
+## References
+
+- [Official documentation](https://developers.google.com/analytics/devguides/collection/ga4/ecommerce)
+- [Learning guide](../learning-guide.md)
+- [Evidence template](../../../templates/learning-evidence.md)
+
+[Curriculum](../../../README.md)

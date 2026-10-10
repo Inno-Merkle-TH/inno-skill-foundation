@@ -1,0 +1,61 @@
+name: QE extended local-runtime checks
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Owned runner only; mobile needs a separately approved device runner
+        type: choice
+        options: [performance, recovery]
+        required: true
+permissions:
+  contents: read
+jobs:
+  extended:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22.22.3'
+      - name: Bounded performance
+        if: inputs.suite == 'performance'
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts --prefix labs/api
+          curl --fail --location --silent --show-error https://github.com/grafana/k6/releases/download/v2.3.0/k6-v2.3.0-linux-amd64.tar.gz -o "$RUNNER_TEMP/k6.tar.gz"
+          echo "39c3117b6af817592dcd0ce4242105c0a7af10948c2a425306f0be8f7a8a8ab1  $RUNNER_TEMP/k6.tar.gz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/k6.tar.gz" -C "$RUNNER_TEMP"
+          export LAB_TOKEN_A=synthetic-performance-a LAB_TOKEN_B=synthetic-performance-b LAB_STATE_PATH="$RUNNER_TEMP/resources.json"
+          node --import ./labs/api/node_modules/tsx/dist/loader.mjs labs/api/src/server.ts &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in $(seq 1 30); do
+            if curl --fail -s http://127.0.0.1:8090/health; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" = 1
+          "$RUNNER_TEMP/k6-v2.3.0-linux-amd64/k6" run labs/performance/api-smoke.js
+      - name: Isolated recovery
+        if: inputs.suite == 'recovery'
+        working-directory: labs/commerce
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/init-env.sh
+          bash scripts/setup.sh
+          bash tests/failover.sh
+          docker compose -f compose.yaml -f compose.ha.yaml stop wordpress-b
+          docker compose up -d --build --wait proxy wordpress
+          bash scripts/backup.sh
+          snapshot=$(find backups -mindepth 1 -maxdepth 1 -type d | sort | tail -n 1)
+          test -n "$snapshot"
+          bash tests/restore.sh "$snapshot"
+      - name: Stop owned recovery projects
+        if: always() && inputs.suite == 'recovery'
+        working-directory: labs/commerce
+        run: |
+          docker compose -p qe-foundation-restore -f compose.restore.yaml down
+          docker compose -f compose.yaml -f compose.ha.yaml --profile tracking down

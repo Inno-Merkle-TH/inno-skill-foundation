@@ -1,18 +1,27 @@
-# Release review
+# Release Review
 
-- Version/commit/environment:
-- Acceptance criteria และ test coverage:
-- Functional/API/UI evidence:
+Use synthetic data. Fill this artifact for a specific version/environment; distinguish verified evidence from assumptions and unexecuted work. Keep it in your own sandbox, not as pre-completed course evidence.
+
+## Record
+
+- Candidate SHA/version/environment:
+- Acceptance and coverage:
+- Functional/API/web/mobile evidence:
 - Tracking expected/observed/missing/duplicate/invalid/late/excluded:
-- Consent/ownership/security gates:
-- Recovery/RTO/RPO evidence และ SPOFs:
+- Security/consent/ownership checks:
+- Performance/accessibility/recovery evidence:
 - Unverified checks:
-- Risks accepted พร้อม owner ไม่ใช่ QA รับเอง:
-- Rollback procedure และเงื่อนไข:
-- Go/no-go / approvers / rationale:
+- Accepted risks and actual owners:
+- Rollback trigger/procedure/post-checks:
+- Go/no-go rationale and approvers:
 
-## Checklist ก่อนเก็บหลักฐาน
+## Worked Example
 
-- [ ] หลักฐานตรง version/commit ที่จะตัดสิน ไม่ยืมผลจาก commit เก่า
-- [ ] แยก missing/invalid/excluded และ unverified checks ชัดเจน
-- [ ] risks มีผู้รับผิดชอบที่ยอมรับจริง; มี rollback trigger และขั้นตรวจหลัง rollback
+A completed checkout does not override an ownership defect. No-go is a valid evidence-backed outcome.
+
+## Self-Check
+
+- [ ] Every decision has evidence or an explicit uncertainty.
+- [ ] Version, scope and owner are clear enough for another person to act.
+- [ ] Links are accessible and artifacts contain no credentials or personal data.
+- [ ] Next actions and cleanup are recorded; no scores or implied certification.

@@ -53,14 +53,14 @@ export function createApi({ store, tokens }: { store: ResourceStore; tokens: Rec
         send(200, { items: records.slice(offset, offset + limit), total: records.length }); return;
       }
       if (request.method === 'POST' && !id) {
-        const result = await store.mutate(records => {
-          const prior = records.find(record => record.ownerId === ownerId && record.clientRequestId === body.clientRequestId);
+        const result = await store.mutate((records, creations) => {
+          const prior = creations.find(record => record.ownerId === ownerId && record.clientRequestId === body.clientRequestId);
           if (prior) {
             if (prior.title !== body.title) throw new RequestError(409, 'Request key conflict');
             return { status: 200, record: prior };
           }
           const record = { id: randomUUID(), ownerId, title: body.title as string, clientRequestId: body.clientRequestId as string, version: 1 };
-          records.push(record); return { status: 201, record };
+          records.push(record); creations.push({ ...record }); return { status: 201, record };
         });
         send(result.status, result.record); return;
       }

@@ -2,20 +2,76 @@ name: QE foundation checks
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
+concurrency:
+  group: qe-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  unit-api:
-    runs-on: ubuntu-latest
+  documentation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22.22.3'
+      - run: node --test scripts/tests/check-docs.test.mjs labs/performance/tests/safety.test.mjs labs/commerce/tests/snapshot-integrity.test.mjs
+      - run: node scripts/check-docs.mjs --english
+  code:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [qe-code, api, mobile]
     defaults:
       run:
-        working-directory: labs/qe-code
+        working-directory: labs/${{ matrix.package }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version: '22.22.3'
           cache: npm
-          cache-dependency-path: labs/qe-code/package-lock.json
-      - run: npm ci
+          cache-dependency-path: labs/${{ matrix.package }}/package-lock.json
+      - run: npm ci --ignore-scripts
       - run: npm test
       - run: npm run typecheck
-      - run: node --test ../commerce/tests/snapshot-integrity.test.mjs
+      - if: matrix.package == 'api'
+        run: npm run test:collection && npm run test:release
+  web-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '22.22.3'
+      - run: npm ci --ignore-scripts && npx playwright install --with-deps chromium
+        working-directory: labs/qe-code
+      - run: bash scripts/init-env.sh && bash scripts/setup.sh && docker compose --profile tracking up -d --build
+        working-directory: labs/commerce
+      - name: Wait for collector and store
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl --fail -s http://localhost:8080/lab-api/health && curl --fail -s http://localhost:8080/shop/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          exit 1
+      - run: npm run test:e2e
+        working-directory: labs/qe-code
+      - name: Write allowlisted execution metadata
+        if: always()
+        env:
+          RUN_RESULT: ${{ job.status }}
+        run: node -e 'require("fs").writeFileSync("web-evidence.json", JSON.stringify({sha:process.env.GITHUB_SHA,suite:"web-smoke",result:process.env.RUN_RESULT,scope:"synthetic-local",sensitiveArtifacts:"not-uploaded"}))'
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: always()
+        with:
+          name: web-execution-metadata
+          path: web-evidence.json
+          retention-days: 3
+          if-no-files-found: error
+      - name: Stop owned CI services
+        if: always()
+        run: docker compose --profile tracking down
+        working-directory: labs/commerce

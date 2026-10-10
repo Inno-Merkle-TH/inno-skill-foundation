@@ -1,0 +1,1 @@
+export function androidCapabilities(app: string, udid: string) { return { platformName: 'Android', 'appium:automationName': 'UiAutomator2', 'appium:app': app, 'appium:udid': udid, 'appium:noReset': false, 'appium:newCommandTimeout': 60 }; }

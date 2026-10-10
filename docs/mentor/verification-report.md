@@ -1,57 +1,70 @@
-# Verification report
+# Verification Report
 
-บันทึกผลตามลำดับเวลา ข้อความรอทดสอบในช่วงต้นไม่แทนสถานะช่วงหลัง การปรับคู่มือรอบ self-study ดู [documentation review](documentation-review.md); ไม่ถือว่าการตรวจเอกสารเป็น live LINE/GA4 verification
+Evidence is chronological. A past passing run is not a current test result. Never infer live-account or device coverage from source review.
 
-Environment inspected 2026-10-09: macOS arm64, Node 22.22.3, npm 12.1.0, Docker client 29.8.2/server 29.8.1 (Desktop 4.93.0). Docker server ตอบได้ ไม่ได้แปลว่า commerce lab ผ่านแล้ว
+## Original foundation — 2026-10-09
 
-Account-dependent checks (GitHub PR, LINE OA, Login, ngrok, GA4) ยังไม่ได้ทำ ไม่มีการเปิดบัญชี/Provider/tunnel ในนามผู้ใช้ Windows/Linux setup ยังไม่ได้ทดลองจริง
+Environment: macOS arm64, Node 22.22.3, npm 12.1.0, Docker client 29.8.2/server 29.8.1, Docker Desktop 4.93.0. Windows/Linux setup and account-dependent LINE/Login/ngrok/GA4/Claude checks were not executed.
 
-Runtime tests และ Git rehearsal จะบันทึกเมื่อรันจริง ไม่ถือว่า documentation self-review เป็น runtime verification
+- Local HTTP example verified status, body and query, then stopped.
+- Initial links: 11 valid before commerce content; later 28 valid.
+- Validator RED: 18 failures for unimplemented behavior; GREEN: 18/18.
+- npm ci/typecheck/audit passed; audit reported zero at that point. Vitest 4.1.11, TypeScript 6.0.2 and @types/node 22.19.15 were pinned. A peer-resolution crash in Arborist was worked around when generating the lockfile, followed by ordinary npm ci verification.
+- Commerce smoke initially failed because no storefront was running; after setup it passed.
+- Runtime used WordPress 7.1.3/PHP 8.3, WooCommerce 11.2.0, MariaDB 11.4.8 and Nginx 1.28.0.
+- Docker Desktop rejected Documents bind mounts; build contexts resolved this without changing machine security policy.
+- Commerce smoke verified storefront, public/admin boundary, unpublished DB and restart persistence.
+- SQL answers: missing order-b, duplicate order-c surplus 1, eligible total 59700 minor units.
+- Core suite reached 46 passing unit/API/schema/reconciliation/signature tests and passing typecheck.
+- Snapshot-integrity test: 1 passed after a recorded RED.
+- Browser checkout: 1 passed with completed order and accepted purchase contract. Earlier failure exposed block-checkout/template differences; seeding classic pages and semantic assertions resolved it.
+- Actual collector persistence: POST 202, service restart, identical event ID returns 200 duplicate.
+- Failover: app A stopped, storefront and shared asset served by app B; A restored through trap.
+- Git rehearsal completed release/hotfix/conflict/revert without a production push.
+- DB outage returned HTTP 500; DB restored and health verified.
+- Snapshot backups/20261009T102107Z contained a SHA256 identity manifest, SQL/content and order summary. Backup stayed ignored.
+- Isolated restore round2 verified 358 wp_options, order count/value 2:39800 and uploaded asset; primary volumes were not overwritten.
+- First restore attempt imported successfully but comparison failed because image-build output contaminated captured summary stdout. Explicit build before capture fixed the wrapper; verification used a new isolated project.
+- Independent review found item mismatch, bundle integrity and source-array coercion issues; tests were added RED→GREEN. Scoped rereview reported all addressed; runtime evidence remained implementer evidence.
+- Final npm ci/test/typecheck/audit passed; staged-file scan covered 90 files without generated credentials/backups.
+- Browser emitted a NO_COLOR/FORCE_COLOR warning; assertions passed.
+- Core backup excluded eventdb/LINE/GA4. Live bot/Login remained guided extensions.
+- Original CI covered unit/API/typecheck/snapshot integrity, not Docker/UI/recovery.
 
-## 2026-10-09: foundation
+Original implementation commit: 870d8d209ecb47a2a693f159d606c12fdaee5a85. [GitHub run 37917734578](https://github.com/Inno-Merkle-TH/inno-skill-foundation/actions/runs/37917734578) completed successfully. Documentation commit e964c54 also passed [run 37921265134](https://github.com/Inno-Merkle-TH/inno-skill-foundation/actions/runs/37921265134).
 
-- HTTP example: automated request ผ่าน status/body/query assertions และหยุด server หลังตรวจ
-- Local Markdown links: 11 ลิงก์ผ่าน (ก่อนเพิ่ม commerce chapter)
-- Validator RED: 18 tests fail เพราะ `Not implemented`; GREEN: 18/18 passed
-- `npm ci`, `npm run typecheck`, `npm audit`: ผ่าน; audit 0 vulnerabilities หลัง pin Vitest 4.1.11
-- พบ npm peer-resolution crash ขณะ update Vitest; stack ชี้ Arborist loadPeerSet; regenerate lock ด้วย `npm install --legacy-peer-deps` แล้วพิสูจน์ `npm ci` ปกติผ่าน ไม่ต้องใช้ flag ตอนผู้เรียนติดตั้ง
-- Node dependencies: TypeScript 6.0.2, Vitest 4.1.11, @types/node 22.19.15; lockfile รวมแล้ว
-- Git rehearsal/PR จริงยังไม่ได้รัน; ตัวอย่างยังรอ manual acceptance
-- Commerce smoke RED: exit 7 เพราะ storefront ยังไม่มี; config validation ผ่าน; runtime setup กำลังดำเนินการ
+## Enterprise migration — 2026-10-09 to 2026-10-10
 
-## 2026-10-09: commerce/data runtime
+In-progress execution evidence:
 
-- Compose core setup ผ่าน: WordPress 7.1.3/PHP8.3, WooCommerce 11.2.0, MariaDB 11.4.8, Nginx 1.28.0
-- Docker Desktop bind mount จาก Documents ถูกปฏิเสธ; เปลี่ยนเป็น build contexts แล้ว runtime ผ่าน ไม่ปรับ security settings ของเครื่อง
-- `bash tests/smoke.sh`: storefront/admin boundary/DB not published/persistence หลัง app restart ผ่าน
-- SQL fixture answers: missing order-b, duplicate order-c surplus=1, eligible total minor=59700
-- `npm test`: 46 passed; `npm run typecheck`: ผ่าน หลัง explicit node types และแยก Vitest จาก Playwright
-- `node --test labs/commerce/tests/snapshot-integrity.test.mjs`: 1 passed; RED ก่อน implementation บันทึกไว้
-- `npm run test:e2e`: 1 browser checkout test ผ่าน (order completed, purchase accepted, value/currency/transaction contract); เคย fail เพราะ block checkout/default template จึงแก้ seed ให้ classic shortcode และ assertion ตาม semantic heading
-- Collector actual MariaDB persistence: first POST 202 → restart service → same event ID 200 duplicate
-- `bash tests/failover.sh`: app A stop แล้ว storefront/shared asset ยังผ่าน app B; primary A เปิดกลับด้วย trap
-- Git local sandbox rehearsal: release/hotfix/conflict/revert ผ่าน ไม่มี push ไป production sandbox
-- Markdown local links 28 และ shell syntax ผ่าน
-- Browser runner มี NO_COLOR/FORCE_COLOR warning จาก environment; ไม่กระทบ assertions
-- LINE/mobile/ngrok/GA4/Login/Claude account actions และ Windows/Linux runtime ยังไม่ verified
+- Baseline core: npm ci, 46 tests, typecheck and snapshot test passed.
+- Documentation validator: six expected RED failures, then seven passing tests.
+- API fixture: four RED contract tests, then passing ownership/CRUD/idempotency/validation/corrupt-store tests and typecheck.
+- Collection runner: RED success/failure assertions, then 12 requests passed twice in isolated stores. It does not execute arbitrary Postman scripts. Postman desktop was not launched.
+- Newman was removed after 19 dependency advisories including critical/high findings. API package subsequently reported zero audit vulnerabilities.
+- Web framework: two tests first failed against unimplemented helpers; four browser tests then passed (granted, denied, mocked collector rejection, synthetic delayed UI).
+- Mobile: seven preflight tests/typecheck passed, audit zero. No usable emulator/device was available; xcrun reported an authorization requirement while listing runtimes, and no platform packages were installed by the author. Android/iOS native execution is not verified.
+- Load safety: seven expected RED rejections, then eight passing guard tests.
+- Release rehearsal: two expected RED tests, then eight total API-package tests passed. Healthy candidate selected; live-but-broken candidate returned health 200/business 503 and baseline remained readable. Child-process cleanup was verified.
+- Accessibility fixture: unlabeled form failed its assertion; adding the associated label passed. The intentionally invalid fixture was detected. Storefront audit is separate and opt-in.
 
-## Recovery และ independent review
+### Final local verification — 2026-10-10
 
-- Database outage: หยุด DB แล้ว storefront HTTP 500 ตามคาด เปิด DB กลับและ health ผ่าน
-- Core snapshot `backups/20261009T102107Z`: SHA256 manifest + identity, SQL/content และ order summary; backup ไม่อยู่ Git
-- Isolated restore round2 ผ่าน: wp_options count 358, orders count/value minor 2:39800 และ uploaded synthetic asset ตรง snapshot; primary project/volumes ไม่ถูกเขียนทับ
-- Restore attempt แรก import สำเร็จแต่ wrapper compare fail เพราะ first-run build output ปน stdout ของ summary; แยก explicit build ก่อน capture แล้ว verify ใน isolated round2 โดยไม่ลบข้อมูลเก่า
-- Initial review พบสาม Important; เพิ่ม RED tests และแก้ item comparison, strict source type, snapshot integrity ก่อน rerun GREEN
-- LINE API/Login guided exercises แทน live implementation เป็น deliberate extension scope; ไม่กล่าวว่า routes นี้มี bot/auth implementation แล้ว
-- CI workflow รัน pure/API/typecheck/snapshot integrity; Docker/UI/recovery ไม่เป็น CI gates ในรุ่นนี้
-- Staged-file/credential scan 90 files ผ่าน ไม่พบ generated passwords/.env/node_modules/backups/test-results
-- Scoped independent re-review: ทั้งสาม Important ADDRESSED ไม่มี Important ใหม่ใน fix scope; runtime tests เป็น executor evidence
-- Final `npm ci/test/typecheck/audit` ผ่าน, 46 tests; snapshot integrity 1 test; browser E2E 1 test ผ่านหลัง rebuild ล่าสุด
-- Core backup ไม่รวม eventdb/LINE/GA4; restore validation ไม่พิสูจน์ end-to-end recovery ทุก store; ระบุในบท reliability
+- English Markdown, local links, anchors and curriculum manifest: zero validation errors; 30 core lessons and 3 optional extensions. Documentation/performance-guard/snapshot checks: 16 passed. `git diff --check` passed.
+- Core package: 46 tests and typecheck passed. API package: 10 tests and typecheck passed; 12 collection requests and both release scenarios passed. Mobile package: 7 preflight tests and typecheck passed. Clean installs succeeded; all three npm audits reported zero vulnerabilities at verification time, not a guarantee against future advisories.
+- Default Chromium suite: 7 passed, 1 opt-in storefront audit skipped. Coverage includes granted/denied consent, mocked collector rejection and rejected pending purchase → revoke → online retry without a second request. No mobile browser or native device execution is implied.
+- Separate actual storefront accessibility audit exited 1 with the axe `list` rule, impact serious. This remains an open storefront finding, not a suppressed failure or an accessibility-conformance claim. Reproduce with the explicit command in lesson 26; the ordinary CI suite only gates the controlled fixtures.
+- k6 2.3.0 bounded local run after the API fix: 2 users, 10 seconds, 40 checks passed, no HTTP failures, p95 1.91 ms. Earlier impossible-threshold negative run exited 99 as expected. Temporary API processes were stopped. These results do not measure commerce or production capacity.
+- Commerce smoke passed; SQL answers remained missing order-b, duplicate order-c surplus 1, eligible value 59700 minor units. Git-flow rehearsal passed in an isolated temporary repository.
+- App failover passed for storefront and shared asset. A transient HTTP 504 occurred before retry recovery (default upstream connection timeout); this is not zero-downtime HA. App A was restored and B stopped afterward.
+- DB outage returned HTTP 500; DB and core services were restored. An initial ad-hoc shell attempt used zsh's read-only `status` variable and stopped; its trap restarted the DB, and the corrected Bash run produced the recorded result.
+- Snapshot `20261010T114122Z` restored into a new isolated project: 358 options, 9 orders/value 179100 minor units and uploaded fixture matched. Primary data was not overwritten. Restore services were stopped and volumes retained; snapshot remains ignored. Browser runs afterward created additional synthetic orders. Event DB and live integrations are outside this backup.
+- The first JavaScript worked example executed successfully. Its learner stub deliberately failed the two-order business assertion (0 versus 24900), as documented; it is not included in the reference regression suite.
 
-## GitHub delivery
+### Independent review and corrections
 
-- Initial implementation commit `870d8d209ecb47a2a693f159d606c12fdaee5a85` push ไป `Inno-Merkle-TH/inno-skill-foundation` main สำเร็จ
-- GitHub Actions run `37917734578`: completed/success สำหรับ npm ci, 46 unit/API tests, typecheck และ snapshot-integrity test
-- Run evidence: https://github.com/Inno-Merkle-TH/inno-skill-foundation/actions/runs/37917734578
-- ข้อความ “CI ยังไม่ได้รัน” ด้านบนเป็นสถานะก่อน push; ผลส่วนนี้เป็นหลักฐานล่าสุด UI/Docker/recovery เป็น local verification ไม่ใช่ CI
+One read-only final review found no Critical findings and three Important issues. The implementer corrected each: creation-request history now survives PATCH/DELETE/restart with a regression observed RED then GREEN; traceability examples no longer claim fixture API coverage proves WooCommerce checkout idempotency; lesson 09 now introduces syntax through a runnable example and intentional-failure exercise. Minor command/directory clarifications and consent-revocation regression were also added. Verification above is implementer evidence, not a second independent approval.
+
+### Remaining evidence boundaries
+
+Native Android/iOS, Postman desktop, live LINE OA/Messaging/Login/ngrok/GA4, paid AI tools and production/cloud security or legal compliance are not verified. The mobile sample and configuration are supplied for separately approved device execution. Checkout retry/idempotency remains unverified in WooCommerce. Hosted CI status must be read for the pushed candidate; local checks alone do not establish a hosted pass.

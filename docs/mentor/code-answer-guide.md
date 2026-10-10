@@ -1,9 +1,19 @@
-# Mentor: beginner code review
+# Code Review and Answer Guidance
 
-เปิดหลังลองเขียน tests และ implementation เอง ใช้ตรวจเหตุผล ไม่คัดลอกคำตอบแล้วอ้างว่าเข้าใจ หลังอ่านให้เปลี่ยน fixture อีกชุดและทำนายผลก่อนรัน
+Read after attempting the exercises. Change the fixture and predict the result afterward; copying an answer is not evidence of understanding.
 
-Summary exercise ต้องคืน count ตามจำนวนรายการและ totalMinor ตามยอดรวมใน currency เดียว ใช้ safe integer และห้าม silently รวมหลาย currency ให้ผู้เรียนเสนอ policy (reject หรือ group) ก่อนเพิ่ม interface
+## Summary and Async Exercises
 
-Test ที่ควรเห็น: empty array, one/multiple orders, invalid input และ negative behavior ที่จับด้วย assertion จริง Async exercise ต้อง await readText, parse JSON, validate แต่ละ record และ propagate error ไม่ swallow เป็น empty success
+summarizeOrders returns count and totalMinor. Empty input gives 0/0; 19900 and 5000 give 2/24900. Require safe integer amounts and choose an explicit mixed-currency policy: reject or group, never silently combine.
 
-ถามผู้เรียนให้เปลี่ยน test fixture โดยไม่ใช้ AI: valueMinor เป็น string, currency lowercase, invalid timestamp, extra fields ทำไม validator ตัดสินเช่นนั้น TypeScript type เป็น compile-time ไม่ใช่คำรับประกัน input ที่ส่งมาจาก network
+loadOrders awaits the injected reader, parses JSON, requires the expected structure, validates each record and propagates rejection. Malformed JSON/read failure must not become empty success.
+
+## Review Prompts
+
+- [ ] Explain unknown, guards, async/await and Promise rejection using the implementation.
+- [ ] Change amount to a string, currency to lowercase, timestamp format or an extra field; predict the result.
+- [ ] Name a business mutation that each test catches.
+- [ ] Separate an import failure from a meaningful assertion failure.
+- [ ] Verify typecheck and runtime validation independently.
+
+See [programming lessons](../handbook/09-javascript.md) and [API lab](../../labs/api/README.md).

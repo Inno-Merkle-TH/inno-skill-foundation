@@ -10,7 +10,7 @@
 
 **Spec:** [Approved curriculum specification](../specs/2026-10-09-enterprise-qe-curriculum-design.md).
 
-Status: written plan awaiting user review. The specification was approved; implementation has not started. This plan preserves Native execution and does not request a new execution-method choice.
+Status: implemented with the preserved Native method; local verification and the independent review/fix pass are complete. Delivery and hosted CI status, actual evidence and deviations are recorded in the [execution ledger](../../mentor/enterprise-migration-ledger.md). Original planning checkboxes are retained as the approved plan, not a claim that unavailable live/device work was executed.
 
 ## Global Constraints
 

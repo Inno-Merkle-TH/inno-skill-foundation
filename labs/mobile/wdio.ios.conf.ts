@@ -1,0 +1,1 @@
+export function iosCapabilities(app: string, udid: string) { return { platformName: 'iOS', 'appium:automationName': 'XCUITest', 'appium:app': app, 'appium:udid': udid, 'appium:noReset': false, 'appium:newCommandTimeout': 60 }; }

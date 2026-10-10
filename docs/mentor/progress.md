@@ -1,51 +1,32 @@
-# Native ledger — plan: docs/superpowers/plans/2026-10-09-qe-foundation.md
+# Historical Implementation Ledger — Original Foundation
 
-เอกสารนี้เป็นลำดับเหตุการณ์ implementation ไม่ใช่ checklist ผู้เรียน สถานะเก่าระหว่างทำงานคงไว้เพื่อ traceability; ดู Delivery ด้านล่างและ [documentation review](documentation-review.md) สำหรับงานปรับคู่มือล่าสุด
+This English historical summary preserves the original decisions and verification limits. It is not the current learner checklist. The full original record remains in Git history at commit e964c54; the current execution record is [enterprise migration ledger](enterprise-migration-ledger.md).
 
-## Preflight rulings
+## Decisions
 
-- Ruling: ใช้ directory ปัจจุบันโดยไม่ init Git/worktree — ยังไม่มี repository และ plan ห้ามสร้างเอง — ต้นทุนหากผิดคือไม่มี Git recovery; เก็บ ledger และไม่ลบไฟล์ต้นฉบับ
-- Ruling: Task 3 coding foundation ทำก่อน commerce runtime — บทเรียน TypeScript ต้องมี runnable tests และไม่พึ่ง Docker — ต้นทุนหากผิดคือเปลี่ยนลำดับงาน ไม่เปลี่ยน learning sequence
-- Ruling: ยังไม่ทำ account actions — OA/Provider binding และ GitHub push ให้ผู้เรียนทำใน sandbox — ต้องมี manual verification ภายหลัง
-- Ruling: ผู้ใช้อนุญาต push ไป Inno-Merkle-TH/inno-skill-foundation เมื่อพร้อม — ตรวจ remote ว่างและสิทธิ์ ADMIN แล้ว init main/remote ได้ — ต้นทุนหากผิดคือ commit history ต้องแก้ผ่าน review ไม่ force push
-- Ruling: LINE API/Login ส่งเป็น optional guided development exercises พร้อม signature helper ไม่ใช่ live integrations — ผู้ใช้ระบุ “ถ้าทัน” และไม่อนุญาต binding/account actions — ต้นทุนหากผิดคือต้องเพิ่ม implementation สำหรับ cohort ที่ต้องใช้ bot/Login ทันที; ระบุ limitation ใน README/บทอย่างชัดเจน
-- Ruling: เปลี่ยน host bind mounts เป็น Docker build contexts — Docker Desktop ปฏิเสธ Documents mount — ต้นทุนหากผิดคือ rebuild เมื่อแก้ config/code ไม่เปลี่ยน security settings ของเครื่อง
-- Ruling: OrderRecord เพิ่ม required items — reviewer พบ missing product/quantity comparison — ต้นทุนหากผิดคือ fixtures/consumer ต้องส่ง items; contract/tests อัปเดตพร้อมกัน
+- The initial directory was not a repository; initialization was deferred until the user authorized the Inno-Merkle-TH/inno-skill-foundation remote.
+- Coding foundation preceded commerce runtime work without changing the learner sequence.
+- No LINE account, Provider or tunnel actions were performed for the user.
+- Optional API/Login were guided implementation exercises with a tested signature helper, not live integrations.
+- Docker Desktop rejected host bind mounts under Documents; build contexts replaced them without weakening machine security settings.
+- OrderRecord gained required items after review identified missing product/quantity comparison.
 
-## Shared-interface review
+## Original Tasks
 
-| Tasks | Interface | Verdict |
-|---|---|---|
-| 1/3 | Node setup → npm lab | Node 22.x, commands จาก labs/qe-code |
-| 2/5/6/7/8 | proxy paths, local/public URLs | ยึด plan port/routes; ไม่เปิด admin/public DB |
-| 3/4/5 | OrderRecord/PurchaseEvent | minor units/UTC/consent; contract สร้างก่อน reconciliation |
-| 4/9/10 | reconciliation evidence | denominator eligible; outage ไม่เท่ากับ lost data โดยอัตโนมัติ |
-| 1/10/11 | safety/evidence | ตรวจความปลอดภัยและหลักฐานก่อนส่งมอบ |
+1. Setup, HTTP, Git, TypeScript, Git flow and evidence templates completed.
+2. Commerce setup/smoke completed with pinned WordPress/WooCommerce and build contexts.
+3. Validator RED/GREEN, typecheck, clean install and audit completed.
+4. SQL fixtures/answers and reconciliation, including items mismatch, verified.
+5. Collector schema/API/persistence and browser instrumentation verified; queue remained ephemeral.
+6. API/UI tests and CI definition completed; hosted CI followed push.
+7. OA/mobile/ngrok documentation completed; live checks remained learner-run.
+8. Signature helper tested; live bot/Login deferred.
+9. App failover, shared asset, DB outage and isolated restore verified.
+10. Governance, capstone and GA4 guidance completed; legal/live verification remained outstanding.
+11. Local links/shell/Compose/unit/API/browser/SQL/backup/restore/credential checks and review completed.
 
-## Progress
+## Original Review and Delivery
 
-- Task 1: complete — setup/HTTP/Git/TypeScript/Git flow docs/templates; HTTP runtime และ Git rehearsal ผ่าน; GitHub PR live รอ cohort
-- Task 2: core setup และ commerce smoke ผ่าน; latest WordPress/WooCommerce pin จาก official APIs; build contexts แทน bind mounts
-- Task 3: complete — validator RED/GREEN, typecheck, npm ci/audit ผ่าน
-- Task 4: complete — SQL fixtures/answers รันจริง, reconciliation tests รวม items mismatch ผ่าน
-- Task 5: collector/API/schema ผ่าน tests; storefront purchase instrumentation และ persistent event DB มี runtime E2E evidence; client queue เป็น ephemeral demo ไม่ใช่ durable delivery
-- Task 6: API/UI tests ผ่าน; CI workflow เพิ่มแล้ว ยังไม่ได้รันบน GitHub
-- Task 7: complete documentation/manual checklists — OA/mobile/ngrok ต้องผู้เรียนทำเอง ไม่ mark live verified
-- Task 8: optional guided exercises + tested signature helper; live webhook/Login deferred ตาม ruling
-- Task 9: scripts/config เขียนแล้ว กำลัง verify failover/isolated restore
-- Task 9: complete runtime verification — app failover/shared asset, DB outage และ isolated restore order count/value/options/asset ผ่าน; restore snapshot manifest ป้องกันการสลับชุด
-- Task 10: complete handbook/templates/capstone/GA4 exercise — legal/live checks ยังต้อง mentor/DPO
-- Task 11: final validation และ security review อยู่ระหว่างดำเนินการ
-- Task 11: complete local verification — links/shell/Compose/unit/API/browser/SQL/backup/restore/credential scan ผ่าน; independent review สาม Important addressed ไม่มี Critical; GitHub CI รอ push
+Three important review findings were fixed: item comparison, snapshot bundle integrity and strict source-type validation. The scoped rereview reported them addressed and no new important issue in that scope; Docker runtime evidence came from the implementer, not the reviewer.
 
-ผลล่าสุด: 46 unit/API/schema tests + 1 snapshot-integrity test + 1 browser checkout/purchase test ผ่าน; commerce smoke, SQL expected answers, Git rehearsal, collector restart persistence และ app failover/shared asset ผ่าน runtime บน macOS arm64
-
-## Independent review
-
-Native final reviewer พบสาม Important: item mismatch ไม่ถูกจับ, snapshot bundle integrity ไม่ตรวจ และ source array ถูก coercion ยอมรับ เพิ่ม RED tests แล้ว fix ตาม evidence มี scoped re-review ตามมา; ไม่มี Critical ในรอบแรก
-
-Scoped re-review: ทั้งสาม ADDRESSED ไม่มี Important ใหม่ในขอบเขต fix; reviewer ไม่ได้ rerun Docker runtime ผล runtime เป็น executor evidence ไม่อ้างว่า independent runtime verification
-
-## Delivery
-
-Implementation push main commit 870d8d2 สำเร็จ; GitHub Actions run 37917734578 success ไม่มี secret/generated artifacts ใน commit ส่วน LINE API/Login/GA4 และ live account checks ยังคงเป็น guided extensions/manual verification ตามข้อจำกัดที่ระบุ
+Implementation commit 870d8d2 was pushed. GitHub Actions run 37917734578 completed successfully. Later documentation changes culminated in e964c54 with 18 lesson self-checks. These historical results do not automatically validate the enterprise migration.

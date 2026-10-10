@@ -1,0 +1,6 @@
+{
+  "name": "qe-mobile-training", "version": "1.0.0", "private": true, "type": "module",
+  "engines": {"node": ">=22.22.3 <23"},
+  "scripts": {"test":"node --import tsx --test tests/*.test.ts", "typecheck":"tsc --noEmit", "test:android":"tsx specs/forms.ts android", "test:ios":"tsx specs/forms.ts ios", "verify:app":"tsx scripts/verify-app.ts"},
+  "devDependencies": {"@types/node":"22.19.15", "typescript":"6.0.2", "tsx":"4.23.15", "webdriverio":"10.0.2"}
+}

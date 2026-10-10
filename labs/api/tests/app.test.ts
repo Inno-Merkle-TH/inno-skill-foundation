@@ -48,6 +48,29 @@ test('concurrent retries create exactly one resource and reject changed payload'
   } finally { await lab.close(); }
 });
 
+test('original creation result survives updates, deletion and store restart', async () => {
+  const lab = await fixture();
+  try {
+    const payload = { title: 'Original', clientRequestId: 'lifecycle' };
+    const original = await (await lab.request('POST', '/resources', payload)).json();
+    await lab.request('PATCH', `/resources/${original.id}`, { title: 'Changed', version: 1 });
+    const replay = await lab.request('POST', '/resources', payload);
+    expect(replay.status).toBe(200);
+    expect(await replay.json()).toEqual(original);
+    expect((await lab.request('POST', '/resources', { ...payload, title: 'Changed' })).status).toBe(409);
+    await lab.request('DELETE', `/resources/${original.id}`);
+    const restarted = createApi({ store: createStore(lab.file), tokens: { 'synthetic-a': 'owner-a' } });
+    restarted.listen(0, '127.0.0.1'); await once(restarted, 'listening');
+    try {
+      const address = restarted.address() as { port: number };
+      const response = await fetch(`http://127.0.0.1:${address.port}/resources`, { method: 'POST', headers: { Authorization: 'Bearer synthetic-a', 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      expect(response.status).toBe(200);
+      expect(await response.json()).toEqual(original);
+      expect(await createStore(lab.file).read()).toEqual([]);
+    } finally { await new Promise<void>(resolve => restarted.close(() => resolve())); }
+  } finally { await lab.close(); }
+});
+
 test('rejects invalid bodies and pagination without storing them', async () => {
   const lab = await fixture();
   try {

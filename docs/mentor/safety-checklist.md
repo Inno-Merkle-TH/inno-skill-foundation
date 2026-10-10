@@ -1,11 +1,14 @@
-# Safety checklist
+# Safety Checklist
 
-- [ ] ไม่เผยแพร่ secrets หรือ credentials
-- [ ] ใช้ synthetic data ไม่ใช้ข้อมูลลูกค้าจริง
-- [ ] ไม่เข้าถึงข้อมูลหรือระบบที่ไม่ได้รับอนุญาต
-- [ ] ไม่ bypass consent เพื่อให้ข้อมูล tracking ดูครบ
-- [ ] แยกผลที่ตรวจจริง ผลที่ mock และสิ่งที่ยังไม่ได้ตรวจ
+- [ ] Use synthetic data and offline checkout only.
+- [ ] Keep credentials, cookies, real UID and raw HAR out of shared artifacts.
+- [ ] Test only owned or explicitly authorized systems.
+- [ ] Never bypass consent to improve tracking completeness.
+- [ ] Keep public tunnels off until owner-reviewed endpoint checks pass.
+- [ ] Do not expose local admin, database or debug ports.
+- [ ] Do not reset shared volumes or overwrite primary data.
+- [ ] Distinguish mock/local/device/live evidence and unavailable checks.
+- [ ] Stop load/failure drills on unexpected traffic or resource pressure.
+- [ ] Escalate actual leaks and revoke/rotate through the owner; deleting one commit is not remediation.
 
-หากพบปัญหา ให้หยุดแชร์ artifact ที่เสี่ยงและทำ remediation ร่วมกับ owner ก่อนส่งมอบ
-
-คำถามสำหรับทบทวนงาน: เปลี่ยน field นี้จะเกิดอะไร, test ใดจับได้, ข้อมูลมาจากไหน และ HTTP 200 ต่างจาก business success อย่างไร งานที่ AI ช่วยสร้างต้องอธิบายและตรวจสอบได้
+[Learning guide](../handbook/learning-guide.md) · [Governance](../handbook/27-security-governance.md)

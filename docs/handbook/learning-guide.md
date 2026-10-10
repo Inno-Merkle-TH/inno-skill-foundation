@@ -1,72 +1,58 @@
-# วิธีทำ lab และตรวจตัวเอง
+# Learning Guide
 
-## วงจรการเรียน
+## The Learning Cycle
 
-1. อ่าน prerequisites และเปิดเฉพาะ services ที่บทนั้นใช้
-2. เขียน expected result ก่อนลงมือ แล้วทำ lab หลักตามลำดับ
-3. เปลี่ยน input หรือทำ failure case ทีละอย่าง เปรียบเทียบ actual กับ expected
-4. ติ๊ก checklist ลงมือทำเมื่อมีหลักฐาน และติ๊กความเข้าใจเมื่ออธิบายด้วยตัวเองพร้อมตัวอย่างได้
-5. คืนระบบ ตรวจ cleanup และบันทึกสิ่งที่ยังไม่รู้ก่อนไปบทถัดไป
+Read the outcome and prerequisites, write expected results, perform the guided lab, then change an input for the independent challenge. Tick completion checks only with evidence and understanding checks only when you can explain or predict behavior yourself. Finish cleanup before starting a dependent lesson.
 
-ใช้ [learning evidence](../../templates/learning-evidence.md) หนึ่งชุดต่อบท เก็บใน sandbox ของตน ไม่แก้ checklist ต้นฉบับให้คนถัดไปเห็นว่าผ่านแล้ว ไม่มีคะแนนหรือการจัดอันดับ
+Use one [evidence record](../../templates/learning-evidence.md) per lesson. Statuses are **verified**, **investigate**, **not executed**, and **out of scope**. Never convert an unavailable device/account into a pass. There is no scoring system.
 
-| สถานะ | ใช้เมื่อ |
-|---|---|
-| ทำแล้วและตรวจแล้ว | มี assertion/result ที่ทำซ้ำได้ พร้อม environment/commit |
-| ต้องลองใหม่ | ผลไม่ตรง expected; เก็บ error และสิ่งที่จะลองต่อ |
-| ยังไม่ทำ | ไม่มีบัญชี เครื่องมือ หรือยังไม่ถึงขั้น implementation |
-| ไม่ใช้ในขอบเขตนี้ | optional ไม่ได้เลือกทำ; ระบุเหตุผล ไม่ติ๊กว่าผ่าน |
+## Working Directory and Tools
 
-Self-check ไม่ใช่แค่รันตามแล้วเห็นสีเขียว: ลองอธิบายโดยปิดคู่มือ เปลี่ยน fixture แล้วทำนายผลก่อนรัน หากต้องดูเฉลยให้ลองใหม่ด้วยข้อมูลอีกชุด Mentor ช่วยเมื่อมีข้อสงสัย; การผูก Provider, เปิด public endpoint และตัดสินกฎหมายยังต้อง owner/ผู้มีหน้าที่ตรวจตาม policy
+Root means the directory containing README.md, docs, labs and templates. Run `pwd` before commands. A new block beginning `cd labs/...` assumes a new root terminal. Scripts use Bash/WSL/Git Bash, not unmodified PowerShell syntax. Node must match package engines; use npm ci with the lockfile, not arbitrary dependency upgrades.
 
-## Working directory และ sandbox
+Use approved official installers. Docker Desktop is not free for every organization; Linux Docker Engine is an alternative subject to policy. Do not disable security controls, install global SDKs without approval or use sudo npm to fix ownership mistakes.
 
-- คำว่า **root** หมายถึงโฟลเดอร์ที่มี README นี้อยู่เหนือ `docs/`; ใช้ `pwd` ตรวจเสมอ
-- ทุก code block ที่มี `cd labs/...` ให้เริ่มจาก root ใหม่ ไม่รันต่อจาก directory ของ block เก่า
-- shell commands ใช้ Bash/WSL/Git Bash; Node ต้อง `>=22.22.3 <23` ตาม package engines
-- แก้แบบฝึกใน Git sandbox ไม่แก้ reference assertions เพื่อให้รับข้อมูลผิด
-- ใช้สำเนา tracked files ที่ไม่มี `.env`, backups, node_modules หรือ credentials; อย่า copy hidden files ทั้งโฟลเดอร์โดยไม่ตรวจ
-- ก่อน commit ใช้ `git status`, `git diff`, `git diff --cached`; ไฟล์ untracked ยังไม่แสดงใน diff
+## Sandbox and Evidence
 
-## ลำดับและขอบเขต
+Use a personal sandbox for learner changes. Copy only tracked source files, not .env, backups, node_modules, app binaries or another repository's .git directory. Inspect git status, git diff and git diff --cached before committing. A file not yet tracked will not appear in ordinary git diff.
 
-| กลุ่ม | dependency | รันอะไรได้ |
-|---|---|---|
-| 00–03 | Node/Git; GitHub account สำหรับ PR จริง | local HTTP, coding tests, Git rehearsal |
-| 04–05 | Docker core store | checkout, persistence, SQL fixtures |
-| 06–08 | core + tracking profile | API/UI, CI, event collector |
-| 09–10 | OA test account/mobile; owner review ก่อน public | OA features, rich menu, identity map |
-| 11–14 | core/tracking; ผล mobile แยกตามสิ่งที่ทำจริง | failure/recovery/governance/capstone |
-| Extensions | core; API/Login ต้องพัฒนาเพิ่มก่อน live | offline lab ก่อน แล้วเลือก live integration |
+Evidence identifies requirement, input, expected/actual, command/directory, exit status, commit and limitations. Remove cookies, tokens, real UID, customer data and order keys. Screenshots alone do not prove persistence. Keep review feedback and AI assistance disclosure; never send real customer data to an AI tool.
 
-SQL/TypeScript fixtures ไม่ใช่ตัวดึง live WooCommerce orders อัตโนมัติ และ core ยังไม่มี LINE webhook/Login/GA4 instrumentation อย่านำ fixture test ผ่านไปอ้างว่าทุก integration ทำงานแล้ว
+## Public Tunnel Preflight
 
-## Public tunnel preflight
-
-ปิด ngrok ไว้ก่อน ตรวจจากเครื่องด้วยคำสั่งนี้ (core ต้องเปิดอยู่):
+Before ngrok is running, check the local public port:
 
 ```bash
 for route in /wp-admin/ /wp-login.php /xmlrpc.php /wp-json/wp/v2/users '/?rest_route=/wp/v2/users'; do
-  curl -s -o /dev/null -w '%{http_code}\n' "http://localhost:8080$route"
+  curl -s -o /dev/null -w '%{http_code}\\n' "http://localhost:8080$route"
 done
 ```
 
-Expected: ทุกบรรทัดเป็น `403`; ตรวจ `docker compose ps` จาก `labs/commerce` ว่า DB ไม่ publish host port และ 8081 ผูก loopback ผ่าน owner review แล้วจึงเปิด tunnel เฉพาะ 8080 ทดสอบ paths เดิมผ่าน HTTPS อีกครั้งก่อนแชร์ URL หากมี ngrok warning ให้แยกออกจาก response ของ app ห้ามเผย 8081 หรือ DB เพื่อแก้ปัญหา
+All responses must be 403. From labs/commerce inspect docker compose ps: DB has no published host port; admin port 8081 binds loopback. Get the endpoint owner's review before exposure. A local collector is a lab, not a hardened public service.
 
-Public store และ collector เป็น lab ไม่ใช่ hardened production: เปิดระยะสั้นเฉพาะ test audience ไม่ส่งข้อมูลจริง ปิด tunnel หากเกิด traffic ไม่คาดคิด
+Use an approved ngrok free account/agent. Store its token privately. Run `ngrok http 8080`, note the assigned HTTPS origin, then stop the tunnel while changing `PUBLIC_URL=https://<assigned-domain>` in labs/commerce/.env. From labs/commerce run `docker compose up -d --force-recreate wordpress`. Reopen the tunnel, recheck denied routes through HTTPS and verify the storefront before publishing the test rich-menu link. If restrictions fail, close it immediately. Never tunnel 8081 or database ports. Record any warning page separately from app behavior.
 
-## คืนระบบหลัง lab
+## Service Handoffs and Cleanup
 
-- อย่ารัน E2E พร้อม smoke/failover/backup เพราะ scripts หยุด/restart service ได้
-- หลัง collector outage: จาก `labs/commerce` ใช้ `docker compose --profile tracking up -d qe-api` แล้วตรวจ `/lab-api/health`; health ไม่พิสูจน์ event DB persistence
-- หลัง DB outage: `docker compose start db` แล้วตรวจ `docker compose ps` และ storefront ก่อนทำงานต่อ
-- หลัง tunnel: Ctrl+C ngrok, คืน `PUBLIC_URL=http://localhost:8080` ใน `.env`, จาก `labs/commerce` รัน `docker compose up -d --force-recreate wordpress` แล้วตรวจร้านค้า/admin
-- หลัง HA: ทำขั้นคืน core mode ในบท 12 ก่อน lab อื่น หากแก้ config ที่ COPY ใน image ต้อง rebuild ไม่ใช่ restart อย่างเดียว
-- หยุด core/tracking ด้วย `docker compose --profile tracking down` โดยไม่ใส่ `-v`; หยุด app B/restore project แยกตามบท 12
-- เก็บ volumes เป็นหลักฐาน ไม่รัน `down -v`, `git clean -fdx` หรือ restore ทับ primary เพื่อทำให้ผลดูผ่าน
+| After | Safe next action from labs/commerce |
+|---|---|
+| Core was stopped | `docker compose up -d --wait` |
+| SQL-only lab | Start core before browser work; retain qe_* fixture tables |
+| Collector outage | `docker compose --profile tracking up -d qe-api`; verify health and actual persistence separately |
+| DB outage | `docker compose start db`; inspect health and business reads |
+| Public tunnel | Stop ngrok, restore PUBLIC_URL=http://localhost:8080, recreate wordpress and inspect shop/admin |
+| HA exercise | Stop wordpress-b with the HA override, rebuild core proxy and verify core mode |
+| Isolated restore | Stop the actual restore project by its name and compose.restore.yaml; retain volumes |
+| End of core/tracking work | `docker compose --profile tracking down`, without -v |
 
-## หลักฐานที่แชร์ได้
+Smoke/failover/backup can restart services: never run them alongside E2E. Config/source COPY changes need image rebuild, not only restart. Do not run down -v, git clean -fdx or restore over primary to obtain a green report.
 
-เก็บคำสั่ง, exit status, expected/actual, synthetic IDs, commit และข้อจำกัด ไม่เก็บ passwords, cookies, access tokens, real UID, raw HAR หรือ backup bundle ใน PR อธิบาย test fail ก่อนแก้และ test หลังแก้ให้สัมพันธ์กับ defect เดิม
+## What Existing Labs Prove
 
-[กลับสารบัญ](../../README.md) · [เริ่มบท 00](00-setup.md)
+SQL/TypeScript fixtures do not automatically extract live WooCommerce orders. The collector accepts purchase only and does not authenticate commerce truth. Client pending events are memory-only; closing a page can lose them. Core backup covers commerce DB/wp-content, not eventdb/LINE/GA4. Native mobile sample tests do not test a native commerce app.
+
+## Using Answers and Feedback
+
+Try the exercise before opening answer guidance. After reading a hint, change the fixture and predict the result to check understanding. Mentors help with uncertainty; they do not score every checkbox. Provider binding, public exposure, legal decisions and release risk acceptance still require the appropriate owner.
+
+[Start lesson 01](01-quality-engineering.md) · [Curriculum](../../README.md)

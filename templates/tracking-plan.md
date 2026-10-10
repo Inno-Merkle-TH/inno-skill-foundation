@@ -1,26 +1,27 @@
-# Tracking plan
+# Tracking Plan
 
-| Event | Business meaning | Trigger | Fields | Consent | Source of truth | Owner |
-|---|---|---|---|---|---|---|
-| view_item | เห็นรายละเอียดสินค้า | หลัง render สินค้าจริง | item_id | analytics | product view | ระบุ owner |
-| add_to_cart | cart เปลี่ยนสำเร็จ | หลัง cart response สำเร็จ | item_id, quantity | analytics | cart state | ระบุ owner |
-| begin_checkout | เริ่มขั้น checkout | ตาม page/state ที่กำหนด | cart summary | analytics | checkout state | ระบุ owner |
-| purchase | order เข้า completed ใน lab | หลัง authoritative order state | transaction_id, value_minor, currency, items | analytics | commerce order | ระบุ owner |
+Use synthetic data. Fill this artifact for a specific version/environment; distinguish verified evidence from assumptions and unexecuted work. Keep it in your own sandbox, not as pre-completed course evidence.
 
-Collector reference ในรุ่นนี้ validate/persist เฉพาะ purchase ไม่ใช่ events ทั้งหมด ผู้เรียนต้องเพิ่ม discriminated schemas/test ก่อนส่ง event อื่น
+## Record
 
-- Reconciliation window (UTC `[from,to)`):
-- Late-arrival allowance:
-- Eligible denominator / excluded reasons:
-- Duplicate definition / event ID policy:
-- Consent revoke / pending queue policy:
-- Source/browser/server trust boundary:
-- PII allowlist, retention และ access:
-- Version/change approval:
-- Missing/invalid/duplicate thresholds และ escalation owner:
+- Event/version and business meaning:
+- Exact trigger and source of truth:
+- Fields/types/units/items mapping:
+- Consent and revoke behavior:
+- Event ID and retry policy:
+- Transaction-level duplicate definition:
+- UTC reconciliation window and late allowance:
+- Eligible denominator/exclusion reasons:
+- PII allowlist/access/retention:
+- Quality thresholds and escalation owner:
 
-## Checklist ก่อนเก็บหลักฐาน
+## Worked Example
 
-- [ ] ระบุ implemented purchase แยกจาก events ที่ยังออกแบบ
-- [ ] fields/money/items/consent/trigger ตรง source contract
-- [ ] ระบุ dedup/window/exclusions และผู้รับผิดชอบเมื่อข้อมูลไม่ตรง
+purchase: completed synthetic WooCommerce order, 19900 minor units THB, matching item quantity and granted consent. The reference collector implements purchase only; view_item/add_to_cart need additional schemas and instrumentation.
+
+## Self-Check
+
+- [ ] Every decision has evidence or an explicit uncertainty.
+- [ ] Version, scope and owner are clear enough for another person to act.
+- [ ] Links are accessible and artifacts contain no credentials or personal data.
+- [ ] Next actions and cleanup are recorded; no scores or implied certification.

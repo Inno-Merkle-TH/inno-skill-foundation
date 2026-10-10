@@ -663,5 +663,76 @@
       "Cleanup and Handoff",
       "References"
     ]
+  },
+  {
+    "id": "E01",
+    "path": "docs/handbook/extensions/line-api.md",
+    "prerequisites": [
+      "22",
+      "24",
+      "27"
+    ],
+    "kind": "extension",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "E02",
+    "path": "docs/handbook/extensions/line-login.md",
+    "prerequisites": [
+      "22",
+      "24",
+      "27"
+    ],
+    "kind": "extension",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
+  },
+  {
+    "id": "E03",
+    "path": "docs/handbook/extensions/ga4.md",
+    "prerequisites": [
+      "23",
+      "27"
+    ],
+    "kind": "extension",
+    "requiredHeadings": [
+      "Outcomes",
+      "Prerequisites",
+      "Concepts",
+      "Worked Example",
+      "Guided Lab",
+      "Expected Results",
+      "Independent Challenge",
+      "Troubleshooting",
+      "Completion Checklist",
+      "Understanding Checklist",
+      "Cleanup and Handoff",
+      "References"
+    ]
   }
 ]

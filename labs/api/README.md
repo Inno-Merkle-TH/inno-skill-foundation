@@ -2,6 +2,8 @@
 
 This independent fixture teaches ownership, validation, idempotency, persistence and optimistic concurrency. It is not the commerce backend and is not production authentication.
 
+Creation keys are owner-scoped and retained until the entire disposable state file is reset. Identical POST retries return the original creation snapshot (200), even after PATCH or DELETE; they never recreate deleted resources. Changed payloads return 409. GET remains authoritative for current existence/version. The state file stores separate `records` and immutable `creations` arrays in one atomic write. Legacy array-only state is rejected, not silently migrated: stop the lab and select a fresh `LAB_STATE_PATH` for this version. This unbounded teaching ledger is not a production retention policy.
+
 ## Quick start
 
 From this directory, with Node >=22.22.3 <23:
@@ -35,6 +37,12 @@ Only use these deliberately synthetic tokens on loopback. Import `postman/collec
 | DELETE /resources/:id | 204 own resource, 404 absent/other owner |
 
 Resource fields: id, ownerId, title, version, clientRequestId. Title is 1–120 trimmed characters; limit is 1–100; offset is a nonnegative integer. Unknown fields are rejected. Missing auth returns 401; malformed input 400; body above 64 KiB 413; storage failure 503.
+
+The machine-readable contract is [openapi.json](openapi.json). The typed client in src/client.ts preserves status/body and refuses cross-origin paths; it does not turn every 2xx into a business assertion.
+
+## Release rehearsal
+
+Run `npm run test:release`. It starts separate baseline/candidate processes with isolated temporary state, verifies a known resource, and rejects a candidate whose health is 200 but business read is 503. Baseline readability is checked before both processes are stopped. This rehearses candidate selection and fallback, not an actual production traffic switch or cloud deployment.
 
 The file store serializes mutations inside one process and atomically replaces the state file. It is not a multiprocess database. Do not point two running servers at one state file. Existing JSON state is validated; corrupt state fails closed rather than being silently reset.
 

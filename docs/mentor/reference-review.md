@@ -1,13 +1,28 @@
-# Reference review — 2026-10-09
+# Reference Review
 
-เปิดตรวจทางการแล้ว: Git branching, TypeScript new-programmer docs, Docker Engine/Desktop license, WordPress image/WP-CLI, WooCommerce HPOS, Claude Skills/Superpowers, LINE OA/API setup/Provider constraints/account linking/signature/Login และ ngrok free limits
+## Historical review — 2026-10-09
 
-ตรวจ WordPress/Plugin official APIs: WordPress 7.1.3; WooCommerce 11.2.0 ต้อง WordPress >=7.0/PHP >=7.4; lab ใช้ PHP8.3 Images/plugin versions pin ใน Compose/setup; ไม่ใช้เวอร์ชันนี้เป็น production security approval
+The original implementation consulted official Git, TypeScript, Docker Engine/Desktop licensing, WordPress image/WP-CLI, WooCommerce HPOS, Claude Skills/Superpowers, LINE setup/Provider/account-linking/signature/Login and ngrok documentation.
 
-npm metadata ใช้ตรวจ pinned dependency availability; npm audit ผ่าน 0 vulnerabilities ใน lab ณวันที่ตรวจ ไม่ใช่การรับประกัน vulnerability-free ตลอดไป
+Official WordPress/plugin metadata at that time identified WordPress 7.1.3 and WooCommerce 11.2.0 (WordPress >=7.0/PHP >=7.4); the lab uses PHP 8.3. Pinned versions are a reproducibility decision, not production security approval. npm metadata and audit were checked; an audit result is time-specific. GitHub action revisions were resolved through the official API.
 
-GitHub official API ใช้ resolve actions checkout/setup-node v4 ไป immutable revisions ใน workflow
+The GDPR authoritative URL was reachable but did not render completely in the research tool. The PDPC endpoint was inaccessible in that tool. Neither observation establishes legal compliance. DPO/legal must verify applicability and current source material.
 
-GDPR authoritative URL เปิดได้แต่ tool ไม่แสดงเนื้อหาครบ; PDPC endpoint เปิดไม่สำเร็จ ต้อง DPO ตรวจต้นฉบับก่อนใช้บทกับ production ไม่อ้างว่าตรวจ legal compliance แล้ว
+## Enterprise migration — 2026-10-09 to 2026-10-10
 
-Reading-list links เช่น GA4/OWASP/MariaDB เป็น official further study; ต้องตรวจ interface/menu/quota อีกครั้งก่อนเปิดแต่ละ cohort ห้ามคัดลอก quota จากบทความเก่ามาบังคับกับบัญชีจริง
+Reviewed primary sources include Playwright practices, Appium requirements, WebdriverIO Appium setup, Postman tests/collection tooling, k6 thresholds, W3C accessibility evaluation and GitHub environments.
+
+The mobile sample is WebdriverIO native-demo-app v2.2.0; release asset digests were obtained through GitHub API. The sample license is MIT; retain upstream attribution when distributing its artifacts. Appium driver/client engine requirements were inspected through package metadata.
+
+Newman 6.2.3 introduced critical/high dependency advisories during local installation. It was removed from the default toolchain; the limited declarative collection runner is not presented as Newman.
+
+External reading links are references, not evidence that every platform/menu/quota was re-executed. Recheck account policies, supported runtime versions and licensing before a new cohort.
+
+- [Playwright](https://playwright.dev/docs/best-practices)
+- [Appium](https://appium.io/docs/en/latest/quickstart/)
+- [Mobile sample release](https://github.com/webdriverio/native-demo-app/releases/tag/v2.2.0)
+- [Postman tests](https://learning.postman.com/docs/tests-and-scripts/write-scripts/test-scripts/)
+- [k6](https://grafana.com/docs/k6/latest/using-k6/thresholds/)
+- [W3C accessibility](https://www.w3.org/WAI/test-evaluate/)
+- [GDPR source](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+- [PDPC](https://www.pdpc.or.th/)

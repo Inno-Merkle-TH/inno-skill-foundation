@@ -1,24 +1,18 @@
-# Acceptance checklist
+# Curriculum Acceptance Checklist
 
-ใช้ตรวจการส่งมอบหลักสูตร ไม่ใช่คะแนนผู้เรียน ไม่ติ๊กข้อที่ยังไม่ได้ทดลองจริง แต่ละข้อแนบ command/result หรือ evidence path; ผลทดสอบต่าง OS/account แยกกัน
+This checks the course deliverable, not learner scores. Attach actual evidence; leave unavailable checks unmarked.
 
-- [ ] ทุกบทมี prerequisite, lab, expected/negative cases และ cleanup
-- [ ] ทุกบทมี checklist การลงมือทำและความเข้าใจที่ตรวจได้เฉพาะเรื่อง
-- [ ] Optional extensions แยก offline/design/implemented/live ชัดเจน
-- [ ] ลิงก์ภายในและคำสั่งอ้างอิงไฟล์ที่มีจริงหรือระบุว่าให้สร้าง
-- [ ] README และ templates สนับสนุนการตรวจตัวเองโดยไม่บังคับรอ mentor ทุกขั้น
-
-- [ ] Setup instructions ใช้ได้บน macOS
-- [ ] Setup instructions ใช้ได้บน Windows/WSL
-- [ ] Setup instructions ใช้ได้บน Linux
-- [ ] Free/license caveats ชัดเจนและ core ไม่บังคับ Claude
-- [ ] HTTP local server bind loopback และ cleanup ได้
-- [ ] GitHub PR จริงมี mentor review ไม่มี credentials
-- [ ] Git release/hotfix, conflict และ ordinary revert rehearsal ผ่าน
-- [ ] TypeScript validator มี valid/invalid tests และ typecheck ผ่าน
-- [ ] SQL fixtures/reconciliation จับ seeded defect
-- [ ] Commerce clean setup, persistence, checkout และ public admin blocking
-- [ ] Consent/revoke/outage tracking drills ผ่าน
-- [ ] LINE OA setup และ mobile journey ผ่านจริง
-- [ ] HA/isolated restore report ไม่อ้าง production HA
-- [ ] Capstone report แยก verified/unverified และมี risk owners
+- [ ] Thirty core lessons and three optional extensions follow the manifest.
+- [ ] Every lesson has the twelve standard sections and useful independent work.
+- [ ] Prerequisites, commands, directories and cleanup form a workable sequence.
+- [ ] All instructional prose is English; identifiers/intentional fixtures are not mistranslated.
+- [ ] Local links, anchors, manifest and language checks pass.
+- [ ] API, web and mobile-preflight tests/typechecks pass.
+- [ ] Performance safety tests and bounded positive/negative runs are recorded.
+- [ ] Accessibility findings remain visible, not suppressed.
+- [ ] Commerce smoke, SQL, failover and isolated recovery evidence is current where rerun.
+- [ ] Android and iOS runtime evidence is recorded separately.
+- [ ] LINE OA/Provider/Login/ngrok/GA4 live work is explicit, not inferred.
+- [ ] CI checks the pushed candidate and does not expose secrets.
+- [ ] Windows/Linux setup claims reflect actual execution, not an assumption.
+- [ ] JD coverage and release/handover artifacts are complete.

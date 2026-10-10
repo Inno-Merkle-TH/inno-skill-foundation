@@ -16,7 +16,7 @@ A strategy explains scope, risks, test levels, environments and release evidence
 
 ## Worked Example
 
-AC-01 purchase completion → risk R-01 duplicate order → API idempotency plus browser checkout → test evidence → release decision. Counting ten UI tests says nothing about whether R-01 is covered.
+AC-API-01 resource creation → risk R-API-01 duplicate synthetic resource → fixture API retry test → test evidence → release decision. This API never creates WooCommerce orders. Browser checkout evidence does not establish checkout retry/idempotency; record that commerce risk as unverified. Counting ten UI tests says nothing about whether a different risk is covered.
 
 ## Guided Lab
 

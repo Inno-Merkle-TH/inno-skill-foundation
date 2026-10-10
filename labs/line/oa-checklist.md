@@ -1,17 +1,17 @@
-# OA manual checklist
+# LINE OA Feature Checklist
 
-- [ ] บัญชีทดลอง owner/roles ชัดเจน ไม่ผูก production
-- [ ] Profile บอกว่าไม่รับเงินจริง
-- [ ] Greeting ถูก trigger เมื่อเพิ่มเพื่อน
-- [ ] Auto-response และ human chat ไม่ตอบซ้ำโดยไม่ได้ตั้งใจ
-- [ ] Rich menu publish และเข้า shop เดิมด้วย UTM
-- [ ] Broadcast quota ตรวจจาก console ก่อนส่ง
-- [ ] Provider review ผ่านก่อน enable API
-- [ ] Public endpoints review ผ่านก่อนเปิด ngrok
-- [ ] LINE in-app/external browser evidence แยกกัน
-- [ ] Logs/screenshots ไม่มี tokens/real UID
-- [ ] ปิด tunnel และคืน local URL หลัง lab
+Follow [lesson 22](../../docs/handbook/22-line-oa-journey.md) with a consenting test audience. Do not pre-check items from example screenshots.
 
-ไม่มีเครื่องหมายผ่านล่วงหน้า ตรวจด้วยบัญชีทดลองจริงและบันทึก expected/actual; owner review ก่อนผูก Provider/เปิด public endpoint ตาม policy
+- [ ] Test OA owner/roles and non-production purpose are clear.
+- [ ] Profile states the shop is synthetic and accepts no real payments.
+- [ ] Greeting works for a new test friend.
+- [ ] Keyword response and human chat behave as configured.
+- [ ] Published rich menu opens the same shop with the intended UTM.
+- [ ] Quota is checked before one agreed test broadcast.
+- [ ] Provider owner reviews binding before Messaging API is enabled.
+- [ ] Local endpoint restrictions are checked before ngrok exposure.
+- [ ] In-app and external-browser evidence are separate.
+- [ ] Evidence contains no tokens, real UID or customer data.
+- [ ] Tunnel is stopped and local URL restored.
 
-ทำตาม [บท OA](../../docs/handbook/09-line-oa.md) แล้วบันทึกผลใน [learning evidence](../../templates/learning-evidence.md) ข้อที่ยังไม่มีบัญชีหรือสิทธิ์ให้ระบุยังไม่ทำ ไม่ถือว่าผ่านจากภาพตัวอย่าง
+Missing account or device access is not executed, not passed.

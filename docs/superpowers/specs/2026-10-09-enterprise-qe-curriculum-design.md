@@ -1,6 +1,6 @@
 # Enterprise Quality Engineering Curriculum — Design Specification
 
-Status: written specification approved by the user. The [implementation plan](../plans/2026-10-09-enterprise-qe-curriculum.md) awaits review before execution.
+Status: written specification and [implementation plan](../plans/2026-10-09-enterprise-qe-curriculum.md) approved by the user; Native implementation and local verification complete. See the [execution ledger](../../mentor/enterprise-migration-ledger.md) for delivery status, actual results and deviations.
 
 This specification supersedes the curriculum structure in [the original design](2026-10-09-qe-foundation-design.md) once approved. It does not claim that the proposed lessons or new labs already exist.
 
